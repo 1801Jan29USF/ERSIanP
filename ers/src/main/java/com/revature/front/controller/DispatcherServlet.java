@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.servlets.DefaultServlet;
-import org.apache.log4j.Logger;
+
+import com.revature.controller.UserController;
+import com.revature.util.LogSingleton;
 
 /*
  * The Dispatcher receives an HttpServletRequest and parses the url 
@@ -16,8 +18,16 @@ import org.apache.log4j.Logger;
  */
 
 public class DispatcherServlet extends DefaultServlet {
-	private Logger log = Logger.getRootLogger();
+
+	/*******************************************************************************
+	 * Class Fields
+	 ********************************************************************************/
+
 	private UserController uc = new UserController();
+
+	/*******************************************************************************
+	 * Class Methods
+	 ********************************************************************************/
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -27,14 +37,14 @@ public class DispatcherServlet extends DefaultServlet {
 		String url = request.getPathInfo();
 		if (url.startsWith("/static/")) {
 
-			log.trace("Get request made with path starting with '/static/' ");
+			LogSingleton.getLogger().trace("Get request made with path starting with '/static/' ");
 			super.doGet(request, response);
 			return;
 		} else {
 			if (url.startsWith("/Login")) {
 
-				log.trace("Get request made with path" + url);
-				uc.doGet(request, response);
+				LogSingleton.getLogger().trace("Get request made with path" + url);
+				uc.doPost(request, response);
 			}
 		}
 	}
