@@ -2,10 +2,10 @@ package com.revature.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.apache.log4j.Logger;
-
+import com.revature.beans.ErsUser;
 import com.revature.util.ConnectionUtil;
 import com.revature.util.LogSingleton;
 
@@ -26,39 +26,40 @@ public class UserDAOClass implements UserDAO {
 	 * Log Getter
 	 ********************************************************************************/
 
-	public static Logger getLogger() {
-		return log;
-	}
-
 	@Override
-	public void login() {
+	public ErsUser login(String u, String p) {
 
 		String success = "";
 
 		LogSingleton.getLogger().trace("method called to create login");
 		LogSingleton.getLogger().trace("Attempting to get connection to database");
 		try (Connection conn = connUtil.getConnection()) {
-			
-			SELECT department_id
-			  FROM departments d
-			  WHERE EXISTS
-			  (SELECT * FROM employees e
-			    WHERE d.department_id 
-			    = e.department_id);
-			
 
 			LogSingleton.getLogger().trace("connection established with db, creating prepared statement to login");
-			PreparedStatement ps = conn.prepareStatement("");
-			cs.setInt(1, id);
-			cs.setString(2, name);
-			cs.setString(3, type);
-			cs.setInt(4, 0);
-			cs.execute();
+			PreparedStatement ps = conn
+					.prepareStatement("SELECT *FROM ers_users WHERE ers_username = ? AND ers_password = ?");
+			ps.setString(1, u);
+			ps.setString(2, p);
+			LogSingleton.getLogger().trace("login prepared statement executed");
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+
+				LogSingleton.getLogger().trace("user's credentials found. ");
+				
+				//create new User
+				 new ErsUser(rs.getInt("ers_users_id"), rs.getString("ers_username"),
+						rs.getString("ers_password"), rs.getString("user_first_name"), rs.getString("user_last_name"),
+						rs.getString("user_email"), rs.getInt("user_role_id"));
+				 return rs.getInt("ers_users_id");
+
+			}
+
 		} catch (SQLException e) {
-			log.warn("failed to create new account for user with id: " + id);
-			System.out.println(
-					"The account name that you have chosen already exists.Please select a different name and try again");
+			LogSingleton.getLogger().warn("failed to establish connection with database during login");
+
 		}
+		return success;
 
 	}
 
