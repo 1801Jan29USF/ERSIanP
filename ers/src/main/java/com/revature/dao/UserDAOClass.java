@@ -29,8 +29,6 @@ public class UserDAOClass implements UserDAO {
 	@Override
 	public ErsUser login(String u, String p) {
 
-		String success = "";
-
 		LogSingleton.getLogger().trace("method called to create login");
 		LogSingleton.getLogger().trace("Attempting to get connection to database");
 		try (Connection conn = connUtil.getConnection()) {
@@ -42,24 +40,22 @@ public class UserDAOClass implements UserDAO {
 			ps.setString(2, p);
 			LogSingleton.getLogger().trace("login prepared statement executed");
 			ResultSet rs = ps.executeQuery();
-
+			// user is found
 			if (rs.next()) {
 
 				LogSingleton.getLogger().trace("user's credentials found. ");
-				
-				//create new User
-				 new ErsUser(rs.getInt("ers_users_id"), rs.getString("ers_username"),
+				// create new User
+				return new ErsUser(rs.getInt("ers_users_id"), rs.getString("ers_username"),
 						rs.getString("ers_password"), rs.getString("user_first_name"), rs.getString("user_last_name"),
 						rs.getString("user_email"), rs.getInt("user_role_id"));
-				 return rs.getInt("ers_users_id");
-
 			}
 
 		} catch (SQLException e) {
 			LogSingleton.getLogger().warn("failed to establish connection with database during login");
 
 		}
-		return success;
+		// User with entered credentials doesn't exist
+		return null;
 
 	}
 

@@ -11,7 +11,4 @@ public interface HttpController {
 
 	void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException;
 
-	void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException;
-
-	void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException;
 }
