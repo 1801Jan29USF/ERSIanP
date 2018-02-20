@@ -4,36 +4,28 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Employee Profile</title>
+    <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
 
-    <!-- bootstrap css -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
+    <<!-- bootstrap css -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+            crossorigin="anonymous">
 </head>
 
 <body>
-
-
 
 
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
         <h1> Revature Expense Reinbursement System</h1>
         <ul class="nav justify-content-center">
             <li class="nav-item">
-                <a class="nav-link" href="#">Profile</a>
+                <a class="nav-link active" href="#">Profile</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Submit Request</a>
+                <a class="nav-link" href="#">View All Pending Requests</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Past Tickets</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">View My Pending Requests</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Logout</a>
+            <a class="nav-link" href="#">Logout</a>
             </li>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search">
@@ -41,8 +33,6 @@
             </form>
         </ul>
     </nav>
-
-
 
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -71,6 +61,14 @@
         </a>
     </div>
 
+    <ul class="list-group">
+        <li class="list-group-item">ERS Username: </li>
+        <li class="list-group-item">ERS Password: </li>
+        <li class="list-group-item">First Name: </li>
+        <li class="list-group-item">Last Name: </li>
+        <li class="list-group-item">Email: </li>
+        <li class="list-group-item">Position: </li>
+    </ul>
 
 
 
@@ -83,16 +81,6 @@
         crossorigin="anonymous"></script>
 
 
-    <script src="Employeehome.js"></script>
-
-
-
-
-
-
-
-
+    <script src="ManagerProfile.js"></script>
 
 </body>
-
-</html>

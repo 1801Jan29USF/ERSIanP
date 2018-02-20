@@ -3,13 +3,16 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	version="2.5">
-	<display-name>ers</display-name>
+	<display-name>ERSProject1</display-name>
+	
 	<servlet>
 		<servlet-name>FrontController</servlet-name>
 		<servlet-class>com.revature.frontcontroller.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>FrontController</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
+	
 </web-app>
