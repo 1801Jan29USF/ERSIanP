@@ -23,7 +23,7 @@ public class DispatcherServlet extends DefaultServlet {
 	 * Class Fields
 	 ********************************************************************************/
 
-	private LoginController uc = new LoginController();
+	private LoginController lc = new LoginController();
 
 	/*******************************************************************************
 	 * Class Methods
@@ -42,9 +42,9 @@ public class DispatcherServlet extends DefaultServlet {
 			return;
 		} else {
 			if (url.startsWith("/Login")) {
-
+				System.out.println("hello");
 				LogSingleton.getLogger().trace("Post request made with path" + url);
-				uc.doPost(request, response);
+				lc.doPost(request, response);
 			}
 		}
 	}

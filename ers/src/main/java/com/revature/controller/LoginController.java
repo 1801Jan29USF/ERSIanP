@@ -24,7 +24,7 @@ public class LoginController implements HttpController {
 	 * Class Fields
 	 ********************************************************************************/
 
-	private LoginService us = new LoginService();
+	private LoginService ls = new LoginService();
 	private ResponseUtil ru = new ResponseUtil();
 
 	/*******************************************************************************
@@ -55,7 +55,7 @@ public class LoginController implements HttpController {
 					str.append(line);
 				}
 				// send string to login service class
-				us.login(str.toString());
+				ls.login(str.toString());
 			} catch (Exception e) {
 
 				LogSingleton.getLogger().trace("Could not obtain the saml request body from the http request", e);

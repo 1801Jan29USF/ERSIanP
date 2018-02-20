@@ -1,8 +1,11 @@
 package com.revature.util;
 
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -39,7 +42,9 @@ public class ConnectionUtil {
 	private ConnectionUtil() {
 		super();
 		try {
-			prop.load(new FileReader("src/main/resources/database.properties"));
+			InputStream is = getClass().getResourceAsStream("/database.properties");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			prop.load(reader);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
