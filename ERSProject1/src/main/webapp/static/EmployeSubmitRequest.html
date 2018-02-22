@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+
 
     <<!-- bootstrap css -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -46,7 +46,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">$</span>
             </div>
-            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+            <input type="text" class="form-control" id = "amount" aria-label="Amount (to the nearest dollar)">
 
         </div>
 
@@ -54,10 +54,12 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">Reinbursement Description</span>
             </div>
-            <textarea class="form-control" aria-label="With textarea"></textarea>
+            <textarea class="form-control"id = "description" aria-label="With textarea"></textarea>
         </div>
 
     </div>
+
+    <button type="submit" class="btn btn-primary" onclick="submitRequest()">Submit Request</button>
 
     <!-- bootstrap js requirements -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -68,7 +70,7 @@
         crossorigin="anonymous"></script>
 
 
-    <script src="SubmitRequest.js"></script>
+    <script src="ERS.js"></script>
 
 </body>
 

@@ -1,5 +1,7 @@
 package com.revature.services;
 
+import java.util.List;
+
 import com.revature.dao.UserDAOClass;
 
 /*
@@ -19,16 +21,15 @@ public class LoginService {
 	 * User Service Methods
 	 ********************************************************************************/
 
+	// for Singleton
 	public static UserDAOClass getUserDao() {
 		return dao;
 	}
 
-	public void login(String str) {
-		// parse str for username and password
-		
-		String username = "";
-		String password = "";
-		LoginService.getUserDao().login(username, password);
+	// will return a user matching credentials from the database
+	// otherwise will return null
+	public List<String> login(String username, String password) {
+		return LoginService.getUserDao().login(username, password);
 
 	}
 }
