@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.catalina.servlets.DefaultServlet;
 
 import com.revature.controller.EmployeeHomeController;
+import com.revature.controller.EmployeePastTicketsController;
 import com.revature.controller.EmployeeProfileController;
 import com.revature.controller.EmployeeSubmitRequestController;
 import com.revature.controller.LoginController;
@@ -30,7 +31,7 @@ public class DispatcherServlet extends DefaultServlet {
 	EmployeeHomeController ehc = new EmployeeHomeController();
 	EmployeeProfileController epc = new EmployeeProfileController();
 	EmployeeSubmitRequestController src = new EmployeeSubmitRequestController();
-	// PastTicketsController ptc = new pastTicketsController();
+	EmployeePastTicketsController ptc = new EmployeePastTicketsController();
 
 	/*******************************************************************************
 	 * DispatcherServlet Methods
@@ -52,8 +53,7 @@ public class DispatcherServlet extends DefaultServlet {
 			}
 
 			// check that a current session exists
-			if (session.getAttribute("username") != null && session.getAttribute("password") != null) {
-				
+			if (session.getAttribute("id") != null) {
 
 				if (url.startsWith("/EmployeeHome")) {
 
@@ -66,23 +66,17 @@ public class DispatcherServlet extends DefaultServlet {
 					LogSingleton.getLogger().trace("Request successfylly forwarded to EmployeeProfile.html");
 					epc.doGet(request, response);
 				}
-//				if (url.startsWith("/SubmitRequest")) {
-//
-//					LogSingleton.getLogger().trace("Request successfylly forwarded to EmployeeSubmitRequest.html");
-//					src.doPost(request, response);
-//				}
-				// if (url.startsWith("/PendingRequests")) {
-				//
-				// LogSingleton.getLogger().trace("Request successfylly forwarded to
-				// EmployeeSubmitRequest.html");
-				// prc.doPost(request, response);
-				// }
-				// if (url.startsWith("/PastTickets")) {
-				//
-				// LogSingleton.getLogger().trace("Request successfylly forwarded to
-				// EmployeeSubmitRequest.html");
-				// ptc.doPost(request, response);
-				// }
+				if (url.startsWith("/SubmitRequest")) {
+
+					LogSingleton.getLogger().trace("Request successfylly forwarded to EmployeeSubmitRequest.html");
+					src.doGet(request, response);
+				}
+				
+				 if (url.startsWith("/PastTickets")) {
+				
+				 LogSingleton.getLogger().trace("Request successfylly forwarded to PastTickets.html");
+				 ptc.doPost(request, response);
+				 }
 
 			}
 		}
@@ -98,6 +92,9 @@ public class DispatcherServlet extends DefaultServlet {
 		}
 		if (url.startsWith("/Profile")) {
 			epc.doPost(request, response);
+		}
+		if (url.startsWith("/SubmitRequest")) {
+			src.doPost(request, response);
 		}
 	}
 }

@@ -14,8 +14,8 @@ function verifyAndLogin() {
             // 200 says response was a success
             if (xhttp.status === 200) {
                 resp = JSON.parse(xhttp.responseText);
-                if (resp !== "") {
-                    if (resp === 'Employee') {
+                if (resp !== null) {
+                    if (resp === 0) {
 
                         window.location = 'http://localhost:8080/ERSProject1/EmployeeHome';
                     }

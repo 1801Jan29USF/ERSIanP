@@ -1,6 +1,5 @@
-
-function submitRequest() {
-    let url = 'http://localhost:8080/ERSProject1/SubmitRequest';
+function pastTickets() {
+    let url = 'http://localhost:8080/ERSProject1/PastTickets';
     let amount = document.getElementById("amount").value;
     let description = document.getElementById("description").value;
     let type = document.getElementById("type").options[document.getElementById("type").selectedIndex].text
@@ -31,6 +30,4 @@ function submitRequest() {
     xhttp.send(request);
 }
 
-
-
-
+pastTickets();

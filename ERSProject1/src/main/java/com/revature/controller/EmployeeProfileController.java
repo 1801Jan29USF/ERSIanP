@@ -38,8 +38,8 @@ public class EmployeeProfileController implements HttpController {
 
 		ObjectMapper mapper = new ObjectMapper();
 		// write user's profile information to response
-		String r = mapper.writeValueAsString(
-				ps.profile((String) session.getAttribute("username"), (String) session.getAttribute("password")));
+
+		String r = mapper.writeValueAsString(ps.profile((int)session.getAttribute("id")));
 
 		// actually write the json to the body of the request
 		resp.setContentType("application/json");

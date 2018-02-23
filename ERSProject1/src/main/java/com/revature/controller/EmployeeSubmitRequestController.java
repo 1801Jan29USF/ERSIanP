@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.services.EmployeeSubmitRequestService;
@@ -32,18 +33,14 @@ public class EmployeeSubmitRequestController implements HttpController {
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		//
+		req.getRequestDispatcher("/static/EmployeeSubmitRequest.html").forward(req, resp);
 	}
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+		HttpSession session = req.getSession();
 
-		LogSingleton.getLogger().trace("Submit req stream initialized");
-		String url = req.getPathInfo();
-		//get the user's id from the url
-		int id = Integer.parseInt(url);
-		
-		LogSingleton.getLogger().trace("Login req stream initialized");
+		LogSingleton.getLogger().trace("SubmitRequest req stream initialized");
 		// initialize stream
 		BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));
 		// mapper used for mapping json objects into credentials ArrayList
@@ -58,13 +55,12 @@ public class EmployeeSubmitRequestController implements HttpController {
 		}
 		List<String> data = mapper.readValue(json,
 				mapper.getTypeFactory().constructCollectionType(List.class, String.class));
-		LogSingleton.getLogger().trace("done converting user's login credentials into arrayList");
+		LogSingleton.getLogger().trace("done converting user's reinbursement request into arrayList");
+		System.out.println(data);
 
 		// send password to Login Service layer
 		// convert user's full credentials to json
-		srs.submitRequest(data.get(0), data.get(0), int id);
-
-
+		srs.submitRequest((int) session.getAttribute("id"), Integer.parseInt(data.get(0)), data.get(1), data.get(2));
 
 	}
 

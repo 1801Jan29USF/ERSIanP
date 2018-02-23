@@ -7,11 +7,11 @@ import java.util.List;
  */
 public interface UserDAO {
 
-	String login(String u, String p);
+	List<Integer> login(String u, String p);
 
-	List<String> profile(String u, String p);
+	List<String> profile(int id);
 
-	void submitRequest(String amt, String desc, int id);
+	void submitRequest(int id, int amt, String desc, int type);
 
 	List<String> pastTickets(int id);
 

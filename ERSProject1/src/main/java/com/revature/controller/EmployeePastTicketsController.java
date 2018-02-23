@@ -1,18 +1,15 @@
 package com.revature.controller;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.revature.services.LoginService;
+import com.revature.services.PastTicketsService;
 import com.revature.util.LogSingleton;
-import com.revature.util.ResponseUtil;
 
 /*
  * /login searches Database for matching Login information. If the Login
@@ -21,7 +18,7 @@ import com.revature.util.ResponseUtil;
  * 
  */
 
-public class PastTicketsController implements HttpController {
+public class EmployeePastTicketsController implements HttpController {
 
 	/*******************************************************************************
 	 * Login Controller Fields
@@ -35,20 +32,16 @@ public class PastTicketsController implements HttpController {
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		//
+		req.getRequestDispatcher("/static/EmployeePastTicketsAndPending.html").forward(req, resp);
 	}
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 
-		req.getRequestDispatcher("/static/EmployeeProfile.html").forward(req, resp);
-		LogSingleton.getLogger().trace("Profile req stream initialized");
-		String url = req.getPathInfo();
-		//get the user's id from the url
-		int id = Integer.parseInt(url);
+		LogSingleton.getLogger().trace("Employee Past Tickets req stream initialized");
 		ObjectMapper mapper = new ObjectMapper();
-		//write user's profile information to response
-		String r = mapper.writeValueAsString(pts.pastTickets(id));
+		HttpSession session = req.getSession();
+		String r = mapper.writeValueAsString(pts.pastTickets((int) session.getAttribute("id")));
 
 		// actually write the json to the body of the request
 		resp.setContentType("application/json");

@@ -27,8 +27,19 @@ public class EmployeeSubmitRequestService {
 
 	// will return a user matching credentials from the database
 	// otherwise will return null
-	public void submitRequest(String amount, String desc, int id) {
-		EmployeeSubmitRequestService.getUserDao().submitRequest(amount, desc, id);
+	public void submitRequest(int id, int amount, String desc, String type) {
+		//assume 0 represents type = OTHER
+		int typeForDB = 0;
+		if (type.equals("Lodging")) {
+			typeForDB = 1;
+		}
+		if (type.equals("Travel")) {
+			typeForDB = 2;
+		}
+		if (type.equals("Food")) {
+			typeForDB = 3;
+		}
+		EmployeeSubmitRequestService.getUserDao().submitRequest(id ,amount, desc, typeForDB);
 
 	}
 }

@@ -57,20 +57,18 @@ public class LoginController implements HttpController {
 		List<String> credentials = mapper.readValue(json,
 				mapper.getTypeFactory().constructCollectionType(List.class, String.class));
 		LogSingleton.getLogger().trace("done converting user's login credentials into arrayList");
-		// write username and password to session
-		HttpSession session = req.getSession();
-		session.setAttribute("username", credentials.get(0));
-		session.setAttribute("password", credentials.get(1));
 
-
-		// send password and username to Login Service layer
-		// convert user's role to JSON
-		String r = mapper.writeValueAsString(ls.login(credentials.get(0), credentials.get(1)));
-		System.out.println(r);
+		// write the role_id to the response
+		List<Integer> idAndRole = ls.login(credentials.get(0), credentials.get(1));
+		String r = mapper.writeValueAsString(idAndRole.get(1));
 
 		// actually write the json to the body of the request
 		resp.setContentType("application/json");
 		resp.getWriter().println(r);
+
+		// write id to session
+		HttpSession session = req.getSession();
+		session.setAttribute("id", idAndRole.get(0));
 	}
 
 }
