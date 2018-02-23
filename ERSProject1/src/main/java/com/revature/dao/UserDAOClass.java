@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class UserDAOClass implements UserDAO {
 	 ********************************************************************************/
 
 	@Override
-	public List<String> login(String u, String p) {
+	public String login(String u, String p) {
 
 		LogSingleton.getLogger().trace("method called to create login");
 		LogSingleton.getLogger().trace("attempting to get connection to database");
@@ -46,17 +46,14 @@ public class UserDAOClass implements UserDAO {
 			if (rs.next()) {
 
 				LogSingleton.getLogger().trace("user's credentials found. ");
-				// create new User
-				List<String> arr = new ArrayList();
-				arr.add(Integer.toString(rs.getInt("ers_users_id")));
+				// get user's role id
 				int role = rs.getInt("user_role_id");
 				PreparedStatement ps2 = conn.prepareStatement("SELECT *FROM ers_user_roles WHERE ers_user_role_id = ?");
 				ps2.setInt(1, role);
 				ResultSet rs2 = ps2.executeQuery();
 
 				if (rs2.next()) {
-					arr.add(rs2.getString("user_role"));
-					return arr;
+					return rs2.getString("user_role");
 				}
 			}
 
@@ -66,12 +63,12 @@ public class UserDAOClass implements UserDAO {
 		}
 		// User with entered credentials doesn't exist
 		LogSingleton.getLogger().trace("user's credentials not found.");
-		return null;
+		return "";
 
 	}
 
 	@Override
-	public List<String> profile(int id) {
+	public List<String> profile(String u, String p) {
 
 		LogSingleton.getLogger().trace("method called to obtain profile information");
 		LogSingleton.getLogger().trace("attempting to get connection to database");
@@ -79,8 +76,9 @@ public class UserDAOClass implements UserDAO {
 
 			LogSingleton.getLogger().trace(
 					"connection established with db, creating prepared statement to obtain user's profile information");
-			PreparedStatement ps = conn.prepareStatement("SELECT *FROM ers_users WHERE ers_users_id = ?");
-			ps.setInt(1, id);
+			PreparedStatement ps = conn.prepareStatement("SELECT *FROM ers_users WHERE ers_username = ? AND ers_password = ?");
+			ps.setString(1, u);
+			ps.setString(2, p);
 			LogSingleton.getLogger().trace("profile prepared statement executed");
 			ResultSet rs = ps.executeQuery();
 			// user is found
@@ -99,6 +97,7 @@ public class UserDAOClass implements UserDAO {
 				PreparedStatement ps2 = conn.prepareStatement("SELECT *FROM ers_user_roles WHERE ers_user_role_id = ?");
 				ps2.setInt(1, role);
 				ResultSet rs2 = ps2.executeQuery();
+
 
 				if (rs2.next()) {
 					arr.add(rs2.getString("user_role"));
@@ -128,7 +127,7 @@ public class UserDAOClass implements UserDAO {
 					.prepareStatement("INSERT INTO ers_reinbursement (reimb_amount, reimb_submitted, reimb_resolved,"
 							+ " reimb_description, reimb_receipt, reimb_author, reimb_resolver, reimb_status_id, reimb_type_id)\r\n) VALUES (?, ?,null,?,null,?,null, 0, ?)");
 			ps.setInt(1, Integer.parseInt(amount));
-			ps.setString(2, LocalDateTime.now());
+			ps.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
 			ps.setString(4, desc);
 			ps.setInt(6, id);
 			ps.setString(9, type);
@@ -143,7 +142,7 @@ public class UserDAOClass implements UserDAO {
 	@Override
 	public void submitRequest(String amt, String desc, int id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

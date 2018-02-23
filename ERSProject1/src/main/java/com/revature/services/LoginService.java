@@ -28,7 +28,7 @@ public class LoginService {
 
 	// will return a user matching credentials from the database
 	// otherwise will return null
-	public List<String> login(String username, String password) {
+	public String login(String username, String password) {
 		return LoginService.getUserDao().login(username, password);
 
 	}

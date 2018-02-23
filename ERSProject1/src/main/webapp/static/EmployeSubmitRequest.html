@@ -46,7 +46,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">$</span>
             </div>
-            <input type="text" class="form-control" id = "amount" aria-label="Amount (to the nearest dollar)">
+            <input type="text" class="form-control" id="amount" aria-label="Amount (to the nearest dollar)">
 
         </div>
 
@@ -54,10 +54,23 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">Reinbursement Description</span>
             </div>
-            <textarea class="form-control"id = "description" aria-label="With textarea"></textarea>
+            <textarea class="form-control" id="description" aria-label="With textarea"></textarea>
         </div>
 
     </div>
+
+    <br>
+    <label>Type of Reinbursement :</label>
+    <br>
+    <br>
+    <select class="form-control" id = "type" onsubmit = "submitRequest()">
+        <option value="one">Lodging</option>
+        <option value="two">Travel</option>
+        <option value="three">Food</option>
+        <option value="four">Other</option>
+
+    </select>
+    <br>
 
     <button type="submit" class="btn btn-primary" onclick="submitRequest()">Submit Request</button>
 
@@ -70,7 +83,7 @@
         crossorigin="anonymous"></script>
 
 
-    <script src="ERS.js"></script>
+    <script src="ERSSubmitRequest.js"></script>
 
 </body>
 

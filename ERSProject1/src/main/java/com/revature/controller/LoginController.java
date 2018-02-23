@@ -8,11 +8,11 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.services.LoginService;
 import com.revature.util.LogSingleton;
-import com.revature.util.ResponseUtil;
 
 /*
  * /login searches Database for matching Login information. If the Login
@@ -57,10 +57,16 @@ public class LoginController implements HttpController {
 		List<String> credentials = mapper.readValue(json,
 				mapper.getTypeFactory().constructCollectionType(List.class, String.class));
 		LogSingleton.getLogger().trace("done converting user's login credentials into arrayList");
+		// write username and password to session
+		HttpSession session = req.getSession();
+		session.setAttribute("username", credentials.get(0));
+		session.setAttribute("password", credentials.get(1));
 
-		// send password to Login Service layer
-		// convert user's full credentials to json
+
+		// send password and username to Login Service layer
+		// convert user's role to JSON
 		String r = mapper.writeValueAsString(ls.login(credentials.get(0), credentials.get(1)));
+		System.out.println(r);
 
 		// actually write the json to the body of the request
 		resp.setContentType("application/json");

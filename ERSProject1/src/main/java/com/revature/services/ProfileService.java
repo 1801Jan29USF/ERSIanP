@@ -28,8 +28,8 @@ public class ProfileService {
 
 	// will return a user matching credentials from the database
 	// otherwise will return null
-	public List<String> profile(int id) {
-		return LoginService.getUserDao().profile(id);
+	public List<String> profile(String u, String p) {
+		return LoginService.getUserDao().profile(u, p);
 
 	}
 }
