@@ -15,4 +15,6 @@ public interface UserDAO {
 
 	List<String> pastTickets(int id);
 
+	List<String> allPastTickets(int id);
+
 }

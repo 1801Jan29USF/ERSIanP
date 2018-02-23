@@ -1,11 +1,5 @@
 function pastTickets() {
     let url = 'http://localhost:8080/ERSProject1/PastTickets';
-    let amount = document.getElementById("amount").value;
-    let description = document.getElementById("description").value;
-    let type = document.getElementById("type").options[document.getElementById("type").selectedIndex].text
-
-    let request = JSON.stringify([amount, description, type]);
-    console.log(request);
 
     //create new XMLHttpRequest object to facilitate posting to Tomcat Server
     let xhttp = new XMLHttpRequest();
@@ -15,12 +9,20 @@ function pastTickets() {
         if (xhttp.readyState === 4) {
             // 200 says response was a success
             if (xhttp.status === 200) {
-
-                //notify the user that the request has been set
-                //TODO
+                if (resp !== null) {
+                    resp = JSON.parse(xhttp.responseText);
+                    for (i = 0; i < resp.length; i++) {
+                        let ul = document.getElementById("list");
+                        let li = document.createElement("li");
+                        li.className = "list-group-item";
+                        li.appendChild(document.createTextNode(resp[i]));
+                        ul.classname = "list-group";
+                        ul.appendChild(li);
+                    }
+                }
 
             } else {
-                console.log('Request for login failed')
+                console.log('Request for employee past tickets failed')
             }
         } else {
             console.log('Response is not ready yet')

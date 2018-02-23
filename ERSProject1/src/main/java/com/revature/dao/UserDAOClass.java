@@ -142,7 +142,8 @@ public class UserDAOClass implements UserDAO {
 		try (Connection conn = connUtil.getConnection()) {
 
 			LogSingleton.getLogger().trace("connection established with db, creating prepared statement to login");
-			PreparedStatement ps = conn.prepareStatement("SELECT *FROM ers_reinbursement WHERE ers_user_id = ? ORDER BY reimb_status_id asc");
+			PreparedStatement ps = conn.prepareStatement(
+					"SELECT *FROM ers_reinbursement WHERE ers_user_id = ? ORDER BY reimb_status_id asc");
 			ps.setInt(1, id);
 			LogSingleton.getLogger().trace("past tickets prepared statement executed");
 			ResultSet rs = ps.executeQuery();
@@ -204,7 +205,7 @@ public class UserDAOClass implements UserDAO {
 					}
 					arr.add(re);
 				}
-				
+
 				return arr;
 
 			}
@@ -216,6 +217,89 @@ public class UserDAOClass implements UserDAO {
 		}
 		// User with entered credentials doesn't exist
 		LogSingleton.getLogger().trace("user's credentials not found.");
+		return null;
+	}
+
+	@Override
+	public List<String> allPastTickets(int id) {
+		LogSingleton.getLogger().trace("method called to retrieve all past tickets");
+		LogSingleton.getLogger().trace("attempting to get connection to database");
+		try (Connection conn = connUtil.getConnection()) {
+
+			LogSingleton.getLogger().trace("connection established with db, creating prepared statement to login");
+			PreparedStatement ps = conn.prepareStatement("SELECT *FROM ers_reinbursement");
+			LogSingleton.getLogger().trace("all past tickets prepared statement executed");
+			ResultSet rs = ps.executeQuery();
+
+			// initialize two arrays. one for pending requests
+			// and one for all the others
+			List<String> arr = new ArrayList<String>();
+			// user is found
+			String re = "";
+			while (rs.next()) {
+				if (rs.getInt("reimb_status_id") == 0) {
+					re = re + rs.getInt("reimb_amount") + rs.getTimestamp("reimb_submitted")
+							+ rs.getString("reimb_description") + "PENDING";
+					if (rs.getInt("reimb_type_id") == 0) {
+						re = re + "OTHER";
+					}
+					if (rs.getInt("reimb_type_id") == 1) {
+						re = re + "LODGING";
+					}
+					if (rs.getInt("reimb_type_id") == 2) {
+						re = re + "TRAVEL";
+					}
+					if (rs.getInt("reimb_type_id") == 3) {
+						re = re + "FOOD";
+					}
+					arr.add(re);
+
+				} else if (rs.getInt("reimb_status_id") == 1) {
+					re = re + rs.getInt("reimb_amount") + rs.getTimestamp("reimb_submitted")
+							+ rs.getString("reimb_description") + "APPROVED";
+					if (rs.getInt("reimb_type_id") == 0) {
+						re = re + "OTHER";
+					}
+					if (rs.getInt("reimb_type_id") == 1) {
+						re = re + "LODGING";
+					}
+					if (rs.getInt("reimb_type_id") == 2) {
+						re = re + "TRAVEL";
+					}
+					if (rs.getInt("reimb_type_id") == 3) {
+						re = re + "FOOD";
+					}
+					arr.add(re);
+
+				} else {
+					re = re + rs.getInt("reimb_amount") + rs.getTimestamp("reimb_submitted")
+							+ rs.getString("reimb_description") + "APPROVED";
+					if (rs.getInt("reimb_type_id") == 0) {
+						re = re + "OTHER";
+					}
+					if (rs.getInt("reimb_type_id") == 1) {
+						re = re + "LODGING";
+					}
+					if (rs.getInt("reimb_type_id") == 2) {
+						re = re + "TRAVEL";
+					}
+					if (rs.getInt("reimb_type_id") == 3) {
+						re = re + "FOOD";
+					}
+					arr.add(re);
+				}
+
+				return arr;
+
+			}
+			LogSingleton.getLogger().trace("all user's past tickets found. ");
+
+		} catch (SQLException e) {
+			LogSingleton.getLogger().warn("failed to establish connection with database during login");
+
+		}
+		// User with entered credentials doesn't exist
+		LogSingleton.getLogger().trace("all user's credentials not found.");
 		return null;
 	}
 

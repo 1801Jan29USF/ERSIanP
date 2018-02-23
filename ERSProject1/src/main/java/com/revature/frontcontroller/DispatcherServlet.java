@@ -9,11 +9,13 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.servlets.DefaultServlet;
 
+import com.revature.controller.AllPastTicketsController;
 import com.revature.controller.EmployeeHomeController;
 import com.revature.controller.EmployeePastTicketsController;
 import com.revature.controller.EmployeeProfileController;
 import com.revature.controller.EmployeeSubmitRequestController;
 import com.revature.controller.LoginController;
+import com.revature.controller.ManagerHomeController;
 import com.revature.util.LogSingleton;
 
 /*
@@ -32,6 +34,8 @@ public class DispatcherServlet extends DefaultServlet {
 	EmployeeProfileController epc = new EmployeeProfileController();
 	EmployeeSubmitRequestController src = new EmployeeSubmitRequestController();
 	EmployeePastTicketsController ptc = new EmployeePastTicketsController();
+	ManagerHomeController mhc = new ManagerHomeController();
+	AllPastTicketsController aptc = new AllPastTicketsController();
 
 	/*******************************************************************************
 	 * DispatcherServlet Methods
@@ -61,6 +65,12 @@ public class DispatcherServlet extends DefaultServlet {
 					ehc.doGet(request, response);
 
 				}
+				if (url.startsWith("/ManagerHome")) {
+
+					LogSingleton.getLogger().trace("Request successfylly forwarded to EmployeeHome.html");
+					mhc.doGet(request, response);
+
+				}
 				if (url.startsWith("/Profile")) {
 
 					LogSingleton.getLogger().trace("Request successfylly forwarded to EmployeeProfile.html");
@@ -71,12 +81,18 @@ public class DispatcherServlet extends DefaultServlet {
 					LogSingleton.getLogger().trace("Request successfylly forwarded to EmployeeSubmitRequest.html");
 					src.doGet(request, response);
 				}
-				
-				 if (url.startsWith("/PastTickets")) {
-				
-				 LogSingleton.getLogger().trace("Request successfylly forwarded to PastTickets.html");
-				 ptc.doPost(request, response);
-				 }
+
+				if (url.startsWith("/PastTickets")) {
+
+					LogSingleton.getLogger().trace("Request successfylly forwarded to PastTickets.html");
+					ptc.doPost(request, response);
+				}
+
+				if (url.startsWith("/AllPastTickets")) {
+
+					LogSingleton.getLogger().trace("Request successfylly forwarded to AllPastTickets.html");
+					aptc.doPost(request, response);
+				}
 
 			}
 		}
