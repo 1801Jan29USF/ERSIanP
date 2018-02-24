@@ -85,13 +85,20 @@ public class DispatcherServlet extends DefaultServlet {
 				if (url.startsWith("/PastTickets")) {
 
 					LogSingleton.getLogger().trace("Request successfylly forwarded to PastTickets.html");
-					ptc.doPost(request, response);
+					ptc.doGet(request, response);
 				}
 
 				if (url.startsWith("/AllPastTickets")) {
 
 					LogSingleton.getLogger().trace("Request successfylly forwarded to AllPastTickets.html");
-					aptc.doPost(request, response);
+					aptc.doGet(request, response);
+				}
+				if (url.startsWith("/Logout")) {
+
+					LogSingleton.getLogger().trace("Request successfylly forwarded to Login.html");
+					request.getRequestDispatcher("/static/Login.html").forward(request, response);
+					session.invalidate();
+
 				}
 
 			}
@@ -111,6 +118,9 @@ public class DispatcherServlet extends DefaultServlet {
 		}
 		if (url.startsWith("/SubmitRequest")) {
 			src.doPost(request, response);
+		}
+		if (url.startsWith("/PastTickets")) {
+			ptc.doPost(request, response);
 		}
 	}
 }

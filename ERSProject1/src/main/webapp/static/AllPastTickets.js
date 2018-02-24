@@ -1,11 +1,5 @@
 function allPastTickets() {
     let url = 'http://localhost:8080/ERSProject1/AllPastTickets';
-    let amount = document.getElementById("amount").value;
-    let description = document.getElementById("description").value;
-    let type = document.getElementById("type").options[document.getElementById("type").selectedIndex].text
-
-    let request = JSON.stringify([amount, description, type]);
-    console.log(request);
 
     //create new XMLHttpRequest object to facilitate posting to Tomcat Server
     let xhttp = new XMLHttpRequest();
@@ -18,35 +12,40 @@ function allPastTickets() {
                 if (resp !== null) {
                     resp = JSON.parse(xhttp.responseText);
                     for (i = 0; i < resp.length; i++) {
+                        var table = document.getElementById("table");
+                        var row = table.insertRow();
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        var cell3 = row.insertCell(2);
+                        var cell4 = row.insertCell(3);
+                        var cell5 = row.insertCell(4);
+                        var cell6 = row.insertCell(5);
+                        var cell7 = row.insertCell(6);
 
-                        //create a row for list with reinbursement message
-                        let ul = document.getElementById("list");
-                        let li = document.createElement("li");
-                        li.className = "list-group-item";
-                        li.appendChild(document.createTextNode(resp[i]));
-                        ul.classname = "list-group";
-                        ul.appendChild(li);
 
-                        if (resp[i].includes("PENDING") {
+                        // Add some text to the new cells:
+                        cell1.innerHTML = resp[0];
+                        cell2.innerHTML = resp[1];
+                        cell3.innerHTML = resp[2];
+                        cell4.innerHTML = resp[3];
+                        cell5.innerHTML = resp[4];
+                        cell6.innerHTML = resp[5];
+                        cell7.innerHTML = resp[6];
 
-
+                        if (res[6] === 0) {
 
                             //create the approve or deny selcect element and append it to list row element
                             let sel = document.createElement("SELECT")
                             var newListData = new Option("Approve", "Approve");
-                            var newListData2 = new Option("Approve", "Approve");
-                            sel.className = "form-control;
+                            var newListData2 = new Option("Deny", "Deny");
+                            sel.className = "form-control";
                             sel.appendChild(newListData);
                             sel.appendChild(newListData2);
                             li.appendChild(sel)
 
 
                             //add a submit button to the row 
-                            var btn = document.createElement("BUTTON");
-                            var t = document.createTextNode("SUBMIT");
-                            btn.className = "btn btn-primary btn-lg"
-                            btn.appendChild(t);
-                            li.appendChild(btn);
+                            cell6.innerHTML = "<button type='button' class='btn btn-primary'>Button</button>";
                         }
                     }
                 }

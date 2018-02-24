@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.revature.util.ConnectionUtil;
@@ -143,68 +145,30 @@ public class UserDAOClass implements UserDAO {
 
 			LogSingleton.getLogger().trace("connection established with db, creating prepared statement to login");
 			PreparedStatement ps = conn.prepareStatement(
-					"SELECT *FROM ers_reinbursement WHERE ers_user_id = ? ORDER BY reimb_status_id asc");
+					"SELECT *FROM ers_reimbursement WHERE reimb_author = ? ORDER BY reimb_status_id asc");
 			ps.setInt(1, id);
 			LogSingleton.getLogger().trace("past tickets prepared statement executed");
 			ResultSet rs = ps.executeQuery();
 
 			// initialize two arrays. one for pending requests
 			// and one for all the others
-			List<String> arr = new ArrayList();
+			List<String> arr = new ArrayList<String>();
 			// user is found
 			String re = "";
 			while (rs.next()) {
-				if (rs.getInt("reimb_status_id") == 0) {
-					re = re + rs.getInt("reimb_amount") + rs.getTimestamp("reimb_submitted")
-							+ rs.getString("reimb_description") + "PENDING";
-					if (rs.getInt("reimb_type_id") == 0) {
-						re = re + "OTHER";
-					}
-					if (rs.getInt("reimb_type_id") == 1) {
-						re = re + "LODGING";
-					}
-					if (rs.getInt("reimb_type_id") == 2) {
-						re = re + "TRAVEL";
-					}
-					if (rs.getInt("reimb_type_id") == 3) {
-						re = re + "FOOD";
-					}
-					arr.add(re);
 
-				} else if (rs.getInt("reimb_status_id") == 1) {
-					re = re + rs.getInt("reimb_amount") + rs.getTimestamp("reimb_submitted")
-							+ rs.getString("reimb_description") + "APPROVED";
-					if (rs.getInt("reimb_type_id") == 0) {
-						re = re + "OTHER";
-					}
-					if (rs.getInt("reimb_type_id") == 1) {
-						re = re + "LODGING";
-					}
-					if (rs.getInt("reimb_type_id") == 2) {
-						re = re + "TRAVEL";
-					}
-					if (rs.getInt("reimb_type_id") == 3) {
-						re = re + "FOOD";
-					}
-					arr.add(re);
+				arr.add(Integer.toString(rs.getInt("reimb_amount")));
+				// convert the timestamp to a date and the date to a string
+				Date date = new Date();
+				date.setTime(rs.getTimestamp("reimb_submitted").getTime());
+				String formattedDate = new SimpleDateFormat("yyyyMMdd").format(date);
 
-				} else {
-					re = re + rs.getInt("reimb_amount") + rs.getTimestamp("reimb_submitted")
-							+ rs.getString("reimb_description") + "APPROVED";
-					if (rs.getInt("reimb_type_id") == 0) {
-						re = re + "OTHER";
-					}
-					if (rs.getInt("reimb_type_id") == 1) {
-						re = re + "LODGING";
-					}
-					if (rs.getInt("reimb_type_id") == 2) {
-						re = re + "TRAVEL";
-					}
-					if (rs.getInt("reimb_type_id") == 3) {
-						re = re + "FOOD";
-					}
-					arr.add(re);
-				}
+				arr.add(formattedDate);
+				arr.add(rs.getString("reimb_description"));
+				arr.add(Integer.toString(rs.getInt("reimb_type_id")));
+				arr.add(rs.getString("reimb_resolver"));
+				arr.add(rs.getString("reimb_status"));
+				arr.add(rs.getString("reimb_type"));
 
 				return arr;
 

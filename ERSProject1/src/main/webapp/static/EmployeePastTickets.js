@@ -9,15 +9,31 @@ function pastTickets() {
         if (xhttp.readyState === 4) {
             // 200 says response was a success
             if (xhttp.status === 200) {
+                resp = JSON.parse(xhttp.responseText);
                 if (resp !== null) {
-                    resp = JSON.parse(xhttp.responseText);
+                    let ul = document.getElementById("list");
+
                     for (i = 0; i < resp.length; i++) {
-                        let ul = document.getElementById("list");
-                        let li = document.createElement("li");
-                        li.className = "list-group-item";
-                        li.appendChild(document.createTextNode(resp[i]));
-                        ul.classname = "list-group";
-                        ul.appendChild(li);
+                        var table = document.getElementById("table");
+                        var row = table.insertRow();
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        var cell3 = row.insertCell(2);
+                        var cell4 = row.insertCell(3);
+                        var cell5 = row.insertCell(4);
+                        var cell6 = row.insertCell(5);
+
+
+                        // Add some text to the new cells:
+                        cell1.innerHTML = resp[0];
+                        cell2.innerHTML = resp[1];
+                        cell3.innerHTML = resp[2];
+                        cell4.innerHTML = resp[3];
+                        cell5.innerHTML = resp[4];
+                        cell6.innerHTML = resp[5];
+
+
+
                     }
                 }
 
@@ -29,7 +45,7 @@ function pastTickets() {
         }
     }
     xhttp.open('POST', url);
-    xhttp.send(request);
+    xhttp.send();
 }
 
 pastTickets();
