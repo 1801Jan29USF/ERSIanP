@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.services.ProfileService;
 import com.revature.util.LogSingleton;
 
-public class EmployeeProfileController implements HttpController {
+public class ProfileController implements HttpController {
 
 	/*******************************************************************************
 	 * Login Controller Fields
@@ -25,8 +25,12 @@ public class EmployeeProfileController implements HttpController {
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		req.getRequestDispatcher("/static/EmployeeProfile.html").forward(req, resp);
-
+		String url = req.getPathInfo();
+		if (url.startsWith("/EmployeeProfile")) {
+			req.getRequestDispatcher("/static/EmployeeProfile.html").forward(req, resp);
+		} else {
+			req.getRequestDispatcher("/static/ManagerProfile.html").forward(req, resp);
+		}
 	}
 
 	@Override
@@ -39,7 +43,7 @@ public class EmployeeProfileController implements HttpController {
 		ObjectMapper mapper = new ObjectMapper();
 		// write user's profile information to response
 
-		String r = mapper.writeValueAsString(ps.profile((int)session.getAttribute("id")));
+		String r = mapper.writeValueAsString(ps.profile((int) session.getAttribute("id")));
 
 		// actually write the json to the body of the request
 		resp.setContentType("application/json");

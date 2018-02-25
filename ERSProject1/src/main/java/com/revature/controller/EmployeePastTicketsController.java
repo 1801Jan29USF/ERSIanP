@@ -42,6 +42,7 @@ public class EmployeePastTicketsController implements HttpController {
 		ObjectMapper mapper = new ObjectMapper();
 		HttpSession session = req.getSession();
 		String r = mapper.writeValueAsString(pts.pastTickets((int) session.getAttribute("id")));
+		System.out.println(r);
 
 		// actually write the json to the body of the request
 		resp.setContentType("application/json");

@@ -49,7 +49,7 @@ public class UserDAOClass implements UserDAO {
 
 				LogSingleton.getLogger().trace("user's credentials found. ");
 				// get user's role id
-				List<Integer> arr = new ArrayList();
+				List<Integer> arr = new ArrayList<Integer>();
 				arr.add(rs.getInt("ers_users_id"));
 				arr.add(rs.getInt("user_role_id"));
 				return arr;
@@ -85,7 +85,7 @@ public class UserDAOClass implements UserDAO {
 
 				LogSingleton.getLogger().trace("user's credentials found. ");
 				// create new User
-				List<String> arr = new ArrayList();
+				List<String> arr = new ArrayList<String>();
 				arr.add(rs.getString("ers_username"));
 				arr.add(rs.getString("ers_password"));
 				arr.add(rs.getString("user_first_name"));
@@ -154,7 +154,6 @@ public class UserDAOClass implements UserDAO {
 			// and one for all the others
 			List<String> arr = new ArrayList<String>();
 			// user is found
-			String re = "";
 			while (rs.next()) {
 
 				arr.add(Integer.toString(rs.getInt("reimb_amount")));
@@ -164,16 +163,31 @@ public class UserDAOClass implements UserDAO {
 				String formattedDate = new SimpleDateFormat("yyyyMMdd").format(date);
 
 				arr.add(formattedDate);
-				arr.add(rs.getString("reimb_description"));
-				arr.add(Integer.toString(rs.getInt("reimb_type_id")));
-				arr.add(rs.getString("reimb_resolver"));
-				arr.add(rs.getString("reimb_status"));
-				arr.add(rs.getString("reimb_type"));
 
-				return arr;
+				if (rs.getTimestamp("reimb_resolved") != null) {
+					Date date2 = new Date();
+					date2.setTime(rs.getTimestamp("reimb_resolved").getTime());
+					formattedDate = new SimpleDateFormat("yyyyMMdd").format(date2);
+					arr.add(formattedDate);
+				} else {
+					arr.add("N/A");
+				}
+
+				arr.add(rs.getString("reimb_description"));
+
+				String resolver = Integer.toString(rs.getInt("reimb_resolver"));
+				System.out.println(resolver);
+				if (!resolver.equals("0")) {
+					arr.add(resolver);
+				} else {
+					arr.add("N/A");
+				}
+				arr.add(rs.getString("reimb_status_id"));
+				arr.add(rs.getString("reimb_type_id"));
 
 			}
 			LogSingleton.getLogger().trace("user's past tickets found. ");
+			return arr;
 
 		} catch (SQLException e) {
 			LogSingleton.getLogger().warn("failed to establish connection with database during login");

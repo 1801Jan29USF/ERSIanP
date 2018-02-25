@@ -11,10 +11,10 @@ function pastTickets() {
             if (xhttp.status === 200) {
                 resp = JSON.parse(xhttp.responseText);
                 if (resp !== null) {
-                    let ul = document.getElementById("list");
 
-                    for (i = 0; i < resp.length; i++) {
-                        var table = document.getElementById("table");
+                    let i = 0;
+                    let table = document.getElementById("table");
+                    while (i < resp.length) {
                         var row = table.insertRow();
                         var cell1 = row.insertCell(0);
                         var cell2 = row.insertCell(1);
@@ -22,18 +22,19 @@ function pastTickets() {
                         var cell4 = row.insertCell(3);
                         var cell5 = row.insertCell(4);
                         var cell6 = row.insertCell(5);
+                        var cell7 = row.insertCell(6);
+
 
 
                         // Add some text to the new cells:
-                        cell1.innerHTML = resp[0];
-                        cell2.innerHTML = resp[1];
-                        cell3.innerHTML = resp[2];
-                        cell4.innerHTML = resp[3];
-                        cell5.innerHTML = resp[4];
-                        cell6.innerHTML = resp[5];
-
-
-
+                        cell1.innerHTML = resp[i];
+                        cell2.innerHTML = resp[i + 1];
+                        cell3.innerHTML = resp[i + 2];
+                        cell4.innerHTML = resp[i + 3];
+                        cell5.innerHTML = resp[i + 4];
+                        cell6.innerHTML = resp[i + 5];
+                        cell7.innerHTML = resp[i + 6];
+                        i = i + 7;
                     }
                 }
 

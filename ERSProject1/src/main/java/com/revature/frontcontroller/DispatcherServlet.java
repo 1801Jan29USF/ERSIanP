@@ -12,7 +12,7 @@ import org.apache.catalina.servlets.DefaultServlet;
 import com.revature.controller.AllPastTicketsController;
 import com.revature.controller.EmployeeHomeController;
 import com.revature.controller.EmployeePastTicketsController;
-import com.revature.controller.EmployeeProfileController;
+import com.revature.controller.ProfileController;
 import com.revature.controller.EmployeeSubmitRequestController;
 import com.revature.controller.LoginController;
 import com.revature.controller.ManagerHomeController;
@@ -31,7 +31,7 @@ public class DispatcherServlet extends DefaultServlet {
 
 	LoginController lc = new LoginController();
 	EmployeeHomeController ehc = new EmployeeHomeController();
-	EmployeeProfileController epc = new EmployeeProfileController();
+	ProfileController pc = new ProfileController();
 	EmployeeSubmitRequestController src = new EmployeeSubmitRequestController();
 	EmployeePastTicketsController ptc = new EmployeePastTicketsController();
 	ManagerHomeController mhc = new ManagerHomeController();
@@ -67,14 +67,14 @@ public class DispatcherServlet extends DefaultServlet {
 				}
 				if (url.startsWith("/ManagerHome")) {
 
-					LogSingleton.getLogger().trace("Request successfylly forwarded to EmployeeHome.html");
+					LogSingleton.getLogger().trace("Request successfylly forwarded to ManagerHome.html");
 					mhc.doGet(request, response);
 
 				}
-				if (url.startsWith("/Profile")) {
+				if (url.startsWith("/EmployeeProfile") || url.startsWith("/ManagerProfile")) {
 
-					LogSingleton.getLogger().trace("Request successfylly forwarded to EmployeeProfile.html");
-					epc.doGet(request, response);
+					LogSingleton.getLogger().trace("Request successfylly forwarded to User's profile");
+					pc.doGet(request, response);
 				}
 				if (url.startsWith("/SubmitRequest")) {
 
@@ -113,13 +113,16 @@ public class DispatcherServlet extends DefaultServlet {
 		if (url.startsWith("/Login")) {
 			lc.doPost(request, response);
 		}
-		if (url.startsWith("/Profile")) {
-			epc.doPost(request, response);
+		if (url.startsWith("/EmployeeProfile") || url.startsWith("/ManagerProfile")) {
+			pc.doPost(request, response);
 		}
 		if (url.startsWith("/SubmitRequest")) {
 			src.doPost(request, response);
 		}
 		if (url.startsWith("/PastTickets")) {
+			ptc.doPost(request, response);
+		}
+		if (url.startsWith("/AllPastTickets")) {
 			ptc.doPost(request, response);
 		}
 	}
