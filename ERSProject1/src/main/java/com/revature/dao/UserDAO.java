@@ -17,4 +17,6 @@ public interface UserDAO {
 
 	List<String> allPastTickets();
 
+	void updateTickets(int status, int ticket_id, int id);
+
 }

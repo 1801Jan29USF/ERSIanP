@@ -1,10 +1,16 @@
 
 
-function approveDeny() {
+function approveDeny(row) {
 
     let url = 'http://localhost:8080/ERSProject1/AllPastTickets';
-    appdeny = "appdeny";
-    let btn = JSON.stringify([appdeny]);
+    let choice = row.childNodes[0].selectedIndex;
+    if (choice == 0) {
+        choice = 1;
+    }
+    else {
+        choice = 2;
+    }
+    let info = JSON.stringify([row.id, choice]);
 
     //create new XMLHttpRequest object to facilitate posting to Tomcat Server
     let xhttp = new XMLHttpRequest();
@@ -14,8 +20,8 @@ function approveDeny() {
         if (xhttp.readyState === 4) {
             // 200 says response was a success
             if (xhttp.status === 200) {
-                console.log("AlLlLeYwAaAaAgG")
 
+                allPastTickets();
 
 
             } else {
@@ -26,7 +32,7 @@ function approveDeny() {
         }
     }
     xhttp.open('POST', url);
-    xhttp.send(appdeny);
+    xhttp.send(info);
 
 }
 
@@ -53,6 +59,7 @@ function allPastTickets() {
                     console.log(resp);
                     let i = 0;
                     let table = document.getElementById("table");
+                    let id;
                     while (i < resp.length) {
                         var row = table.insertRow();
                         var cell1 = row.insertCell(0);
@@ -66,6 +73,8 @@ function allPastTickets() {
 
 
 
+
+
                         // Add some text to the new cells:
                         cell1.innerHTML = resp[i];
                         cell2.innerHTML = resp[i + 1];
@@ -73,8 +82,13 @@ function allPastTickets() {
                         cell4.innerHTML = resp[i + 3];
                         cell5.innerHTML = resp[i + 4];
                         cell6.innerHTML = resp[i + 5];
+                        i_d = resp[i + 8];
+
+
+
+
                         if (resp[i + 6] === '0') {
-                            cell7.innerHTML = "<form method='POST' onsubmit='event.preventDefault(); approveDeny()'><select class='form-control' id='approvedeny'><option value='one'>"
+                            cell7.innerHTML = "<form method='POST' onsubmit='event.preventDefault(); approveDeny(this)' id = " + i_d + "><select class='form-control' id='approvedeny'><option value='one'>"
                                 + "Approve</option><option value='two'>Deny</option></select> <br><button type='submit'"
                                 + "class='btn btn-primary' name = 'name' value = 'exrequest'>Approve/Deny</button> </form> ";
                         }
@@ -82,7 +96,7 @@ function allPastTickets() {
                             cell7.innerHTML = resp[i + 6];
                         }
                         cell8.innerHTML = resp[i + 7];
-                        i = i + 8;
+                        i = i + 9;
                     }
                 }
 

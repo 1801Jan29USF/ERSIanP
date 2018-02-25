@@ -26,4 +26,9 @@ public class AllPastTicketsService {
 		return LoginService.getUserDao().allPastTickets();
 
 	}
+
+	public void updateTickets(int status, int ticket_id, int id) {
+		AllPastTicketsService.getUserDao().updateTickets(status, ticket_id, id);
+
+	}
 }

@@ -3,6 +3,7 @@ package com.revature.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,7 @@ public class AllPastTicketsController implements HttpController {
 	 * Login Controller Fields
 	 ********************************************************************************/
 
-	private AllPastTicketsService pts = new AllPastTicketsService();
+	private AllPastTicketsService apts = new AllPastTicketsService();
 
 	/*******************************************************************************
 	 * HTTP Request Interception Methods
@@ -41,6 +42,8 @@ public class AllPastTicketsController implements HttpController {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));
+		ObjectMapper mapper = new ObjectMapper();
+		HttpSession session = req.getSession();
 
 		String json = "";
 		String line = br.readLine();
@@ -49,12 +52,15 @@ public class AllPastTicketsController implements HttpController {
 			json += line;
 			line = br.readLine();
 		}
-		if (json.equals("appdeny")) {
-			System.out.println("approve/deny");
+		if (!json.equals("")) {
+			List<String> info = mapper.readValue(json,
+					mapper.getTypeFactory().constructCollectionType(List.class, String.class));
+			apts.updateTickets(Integer.parseInt(info.get(1)), Integer.parseInt(info.get(0)),
+					Integer.parseInt((String) session.getAttribute("id")));
 		} else {
 			LogSingleton.getLogger().trace("All Past Tickets req stream initialized");
-			ObjectMapper mapper = new ObjectMapper();
-			String r = mapper.writeValueAsString(pts.allPastTickets());
+			String r = mapper.writeValueAsString(apts.allPastTickets());
+			System.out.println(r);
 
 			// actually write the json to the body of the request
 			resp.setContentType("application/json");

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import com.revature.util.ConnectionUtil;
 import com.revature.util.LogSingleton;
 
@@ -244,6 +246,7 @@ public class UserDAOClass implements UserDAO {
 				}
 				arr.add(rs.getString("reimb_status_id"));
 				arr.add(rs.getString("reimb_type_id"));
+				arr.add(Integer.toString(rs.getInt("reimb_id")));
 
 			}
 			LogSingleton.getLogger().trace("all past tickets found. ");
@@ -256,5 +259,31 @@ public class UserDAOClass implements UserDAO {
 		// User with entered credentials doesn't exist
 		LogSingleton.getLogger().trace("user's credentials not found.");
 		return null;
+	}
+
+	@Override
+	public void updateTickets(int status, int ticket_id, int id) {
+		LogSingleton.getLogger().trace("method called to approve or deny ticket");
+		LogSingleton.getLogger().trace("attempting to get connection to database");
+		try (Connection conn = connUtil.getConnection()) {
+
+			LogSingleton.getLogger()
+					.trace("connection established with db, creating prepared statement to update ticket information");
+			PreparedStatement ps = conn.prepareStatement(
+					"UPDATE ers_reimbursement SET reimb_status_id = ?, reimb_resolved = ?, reimb_resolver = ? WHERE reimb_id = ?");
+
+			ps.setInt(1, status);
+			ps.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+			ps.setInt(3, id);
+			ps.setInt(4, ticket_id);
+
+			ps.executeUpdate();
+			LogSingleton.getLogger().trace("ticket update prepared statement executed");
+
+		} catch (SQLException e) {
+			LogSingleton.getLogger().warn("failed to establish connection with database during login");
+
+		}
+
 	}
 }
