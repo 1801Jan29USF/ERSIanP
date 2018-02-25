@@ -1,6 +1,8 @@
 package com.revature.controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -32,20 +34,33 @@ public class AllPastTicketsController implements HttpController {
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		req.getRequestDispatcher("/static/EmployeePastTicketsAndPending.html").forward(req, resp);
+		req.getRequestDispatcher("/static/AllPastTickets.html").forward(req, resp);
 	}
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 
-		LogSingleton.getLogger().trace("Employee Past Tickets req stream initialized");
-		ObjectMapper mapper = new ObjectMapper();
-		HttpSession session = req.getSession();
-		String r = mapper.writeValueAsString(pts.allPastTickets((int) session.getAttribute("id")));
+		BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));
 
-		// actually write the json to the body of the request
-		resp.setContentType("application/json");
-		resp.getWriter().println(r);
+		String json = "";
+		String line = br.readLine();
+		// read from stream into string
+		while (line != null) {
+			json += line;
+			line = br.readLine();
+		}
+		if (json.equals("appdeny")) {
+			System.out.println("approve/deny");
+		} else {
+			LogSingleton.getLogger().trace("All Past Tickets req stream initialized");
+			ObjectMapper mapper = new ObjectMapper();
+			String r = mapper.writeValueAsString(pts.allPastTickets());
+
+			// actually write the json to the body of the request
+			resp.setContentType("application/json");
+			resp.getWriter().println(r);
+		}
+
 	}
 
 }

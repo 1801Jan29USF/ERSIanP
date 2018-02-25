@@ -11,7 +11,7 @@ import org.apache.catalina.servlets.DefaultServlet;
 
 import com.revature.controller.AllPastTicketsController;
 import com.revature.controller.EmployeeHomeController;
-import com.revature.controller.EmployeePastTicketsController;
+import com.revature.controller.PastTicketsController;
 import com.revature.controller.ProfileController;
 import com.revature.controller.EmployeeSubmitRequestController;
 import com.revature.controller.LoginController;
@@ -33,7 +33,7 @@ public class DispatcherServlet extends DefaultServlet {
 	EmployeeHomeController ehc = new EmployeeHomeController();
 	ProfileController pc = new ProfileController();
 	EmployeeSubmitRequestController src = new EmployeeSubmitRequestController();
-	EmployeePastTicketsController ptc = new EmployeePastTicketsController();
+	PastTicketsController ptc = new PastTicketsController();
 	ManagerHomeController mhc = new ManagerHomeController();
 	AllPastTicketsController aptc = new AllPastTicketsController();
 
@@ -123,7 +123,7 @@ public class DispatcherServlet extends DefaultServlet {
 			ptc.doPost(request, response);
 		}
 		if (url.startsWith("/AllPastTickets")) {
-			ptc.doPost(request, response);
+			aptc.doPost(request, response);
 		}
 	}
 }

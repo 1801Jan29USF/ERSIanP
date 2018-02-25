@@ -199,86 +199,62 @@ public class UserDAOClass implements UserDAO {
 	}
 
 	@Override
-	public List<String> allPastTickets(int id) {
+	public List<String> allPastTickets() {
 		LogSingleton.getLogger().trace("method called to retrieve all past tickets");
 		LogSingleton.getLogger().trace("attempting to get connection to database");
 		try (Connection conn = connUtil.getConnection()) {
 
-			LogSingleton.getLogger().trace("connection established with db, creating prepared statement to login");
-			PreparedStatement ps = conn.prepareStatement("SELECT *FROM ers_reinbursement");
-			LogSingleton.getLogger().trace("all past tickets prepared statement executed");
+			LogSingleton.getLogger()
+					.trace("connection established with db, creating prepared statement to retrieve all past tickets");
+			PreparedStatement ps = conn.prepareStatement("SELECT *FROM ers_reimbursement ORDER BY reimb_status_id asc");
+			LogSingleton.getLogger().trace("past tickets prepared statement executed");
 			ResultSet rs = ps.executeQuery();
 
 			// initialize two arrays. one for pending requests
 			// and one for all the others
 			List<String> arr = new ArrayList<String>();
 			// user is found
-			String re = "";
 			while (rs.next()) {
-				if (rs.getInt("reimb_status_id") == 0) {
-					re = re + rs.getInt("reimb_amount") + rs.getTimestamp("reimb_submitted")
-							+ rs.getString("reimb_description") + "PENDING";
-					if (rs.getInt("reimb_type_id") == 0) {
-						re = re + "OTHER";
-					}
-					if (rs.getInt("reimb_type_id") == 1) {
-						re = re + "LODGING";
-					}
-					if (rs.getInt("reimb_type_id") == 2) {
-						re = re + "TRAVEL";
-					}
-					if (rs.getInt("reimb_type_id") == 3) {
-						re = re + "FOOD";
-					}
-					arr.add(re);
 
-				} else if (rs.getInt("reimb_status_id") == 1) {
-					re = re + rs.getInt("reimb_amount") + rs.getTimestamp("reimb_submitted")
-							+ rs.getString("reimb_description") + "APPROVED";
-					if (rs.getInt("reimb_type_id") == 0) {
-						re = re + "OTHER";
-					}
-					if (rs.getInt("reimb_type_id") == 1) {
-						re = re + "LODGING";
-					}
-					if (rs.getInt("reimb_type_id") == 2) {
-						re = re + "TRAVEL";
-					}
-					if (rs.getInt("reimb_type_id") == 3) {
-						re = re + "FOOD";
-					}
-					arr.add(re);
+				arr.add(Integer.toString(rs.getInt("reimb_amount")));
+				// convert the timestamp to a date and the date to a string
+				Date date = new Date();
+				date.setTime(rs.getTimestamp("reimb_submitted").getTime());
+				String formattedDate = new SimpleDateFormat("yyyyMMdd").format(date);
 
+				arr.add(formattedDate);
+
+				if (rs.getTimestamp("reimb_resolved") != null) {
+					Date date2 = new Date();
+					date2.setTime(rs.getTimestamp("reimb_resolved").getTime());
+					formattedDate = new SimpleDateFormat("yyyyMMdd").format(date2);
+					arr.add(formattedDate);
 				} else {
-					re = re + rs.getInt("reimb_amount") + rs.getTimestamp("reimb_submitted")
-							+ rs.getString("reimb_description") + "APPROVED";
-					if (rs.getInt("reimb_type_id") == 0) {
-						re = re + "OTHER";
-					}
-					if (rs.getInt("reimb_type_id") == 1) {
-						re = re + "LODGING";
-					}
-					if (rs.getInt("reimb_type_id") == 2) {
-						re = re + "TRAVEL";
-					}
-					if (rs.getInt("reimb_type_id") == 3) {
-						re = re + "FOOD";
-					}
-					arr.add(re);
+					arr.add("N/A");
 				}
 
-				return arr;
+				arr.add(rs.getString("reimb_description"));
+				arr.add(rs.getString("reimb_author"));
+
+				String resolver = Integer.toString(rs.getInt("reimb_resolver"));
+				if (!resolver.equals("0")) {
+					arr.add(resolver);
+				} else {
+					arr.add("N/A");
+				}
+				arr.add(rs.getString("reimb_status_id"));
+				arr.add(rs.getString("reimb_type_id"));
 
 			}
-			LogSingleton.getLogger().trace("all user's past tickets found. ");
+			LogSingleton.getLogger().trace("all past tickets found. ");
+			return arr;
 
 		} catch (SQLException e) {
 			LogSingleton.getLogger().warn("failed to establish connection with database during login");
 
 		}
 		// User with entered credentials doesn't exist
-		LogSingleton.getLogger().trace("all user's credentials not found.");
+		LogSingleton.getLogger().trace("user's credentials not found.");
 		return null;
 	}
-
 }

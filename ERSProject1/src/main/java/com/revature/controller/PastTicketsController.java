@@ -18,7 +18,7 @@ import com.revature.util.LogSingleton;
  * 
  */
 
-public class EmployeePastTicketsController implements HttpController {
+public class PastTicketsController implements HttpController {
 
 	/*******************************************************************************
 	 * Login Controller Fields
@@ -32,7 +32,7 @@ public class EmployeePastTicketsController implements HttpController {
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		req.getRequestDispatcher("/static/EmployeePastTicketsAndPending.html").forward(req, resp);
+		req.getRequestDispatcher("/static/PastTickets.html").forward(req, resp);
 	}
 
 	@Override

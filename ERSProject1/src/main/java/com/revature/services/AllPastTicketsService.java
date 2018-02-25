@@ -22,8 +22,8 @@ public class AllPastTicketsService {
 
 	// will return a user matching credentials from the database
 	// otherwise will return null
-	public List<String> allPastTickets(int id) {
-		return LoginService.getUserDao().allPastTickets(id);
+	public List<String> allPastTickets() {
+		return LoginService.getUserDao().allPastTickets();
 
 	}
 }
