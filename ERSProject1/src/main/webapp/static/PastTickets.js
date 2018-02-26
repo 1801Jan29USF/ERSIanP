@@ -23,17 +23,33 @@ function pastTickets() {
                         var cell5 = row.insertCell(4);
                         var cell6 = row.insertCell(5);
                         var cell7 = row.insertCell(6);
-
-
-
                         // Add some text to the new cells:
-                        cell1.innerHTML = resp[i];
+                        cell1.innerHTML = "$ " + resp[i];
                         cell2.innerHTML = resp[i + 1];
                         cell3.innerHTML = resp[i + 2];
                         cell4.innerHTML = resp[i + 3];
                         cell5.innerHTML = resp[i + 4];
-                        cell6.innerHTML = resp[i + 5];
-                        cell7.innerHTML = resp[i + 6];
+                        if (resp[i + 5] === "0") {
+                            cell6.innerHTML = "Pending";
+                        }
+                        if (resp[i + 5] === "1") {
+                            cell6.innerHTML = "Approved";
+                        }
+                        if (resp[i + 5] === "2") {
+                            cell6.innerHTML = "Denied";
+                        }
+                        if (resp[i + 6] === "0") {
+                            cell7.innerHTML = "Other";
+                        }
+                        if (resp[i + 6] === "1") {
+                            cell7.innerHTML = "Lodging";
+                        }
+                        if (resp[i + 6] === "2") {
+                            cell7.innerHTML = "Travel";
+                        }
+                        if (resp[i + 6] === "3") {
+                            cell7.innerHTML = "Food";
+                        }
                         i = i + 7;
                     }
                 }

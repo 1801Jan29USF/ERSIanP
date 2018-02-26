@@ -56,7 +56,7 @@ public class AllPastTicketsController implements HttpController {
 			List<String> info = mapper.readValue(json,
 					mapper.getTypeFactory().constructCollectionType(List.class, String.class));
 			apts.updateTickets(Integer.parseInt(info.get(1)), Integer.parseInt(info.get(0)),
-					Integer.parseInt((String) session.getAttribute("id")));
+					(int) session.getAttribute("id"));
 		} else {
 			LogSingleton.getLogger().trace("All Past Tickets req stream initialized");
 			String r = mapper.writeValueAsString(apts.allPastTickets());

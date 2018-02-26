@@ -162,14 +162,14 @@ public class UserDAOClass implements UserDAO {
 				// convert the timestamp to a date and the date to a string
 				Date date = new Date();
 				date.setTime(rs.getTimestamp("reimb_submitted").getTime());
-				String formattedDate = new SimpleDateFormat("yyyyMMdd").format(date);
+				String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
 
 				arr.add(formattedDate);
 
 				if (rs.getTimestamp("reimb_resolved") != null) {
 					Date date2 = new Date();
 					date2.setTime(rs.getTimestamp("reimb_resolved").getTime());
-					formattedDate = new SimpleDateFormat("yyyyMMdd").format(date2);
+					formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(date2);
 					arr.add(formattedDate);
 				} else {
 					arr.add("N/A");
@@ -222,14 +222,14 @@ public class UserDAOClass implements UserDAO {
 				// convert the timestamp to a date and the date to a string
 				Date date = new Date();
 				date.setTime(rs.getTimestamp("reimb_submitted").getTime());
-				String formattedDate = new SimpleDateFormat("yyyyMMdd").format(date);
+				String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
 
 				arr.add(formattedDate);
 
 				if (rs.getTimestamp("reimb_resolved") != null) {
 					Date date2 = new Date();
 					date2.setTime(rs.getTimestamp("reimb_resolved").getTime());
-					formattedDate = new SimpleDateFormat("yyyyMMdd").format(date2);
+					formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(date2);
 					arr.add(formattedDate);
 				} else {
 					arr.add("N/A");

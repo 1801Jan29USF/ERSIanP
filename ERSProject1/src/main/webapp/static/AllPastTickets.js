@@ -70,11 +70,6 @@ function allPastTickets() {
                         var cell6 = row.insertCell(5);
                         var cell7 = row.insertCell(6);
                         var cell8 = row.insertCell(7);
-
-
-
-
-
                         // Add some text to the new cells:
                         cell1.innerHTML = resp[i];
                         cell2.innerHTML = resp[i + 1];
@@ -83,19 +78,32 @@ function allPastTickets() {
                         cell5.innerHTML = resp[i + 4];
                         cell6.innerHTML = resp[i + 5];
                         i_d = resp[i + 8];
-
-
-
-
                         if (resp[i + 6] === '0') {
                             cell7.innerHTML = "<form method='POST' onsubmit='event.preventDefault(); approveDeny(this)' id = " + i_d + "><select class='form-control' id='approvedeny'><option value='one'>"
                                 + "Approve</option><option value='two'>Deny</option></select> <br><button type='submit'"
                                 + "class='btn btn-primary' name = 'name' value = 'exrequest'>Approve/Deny</button> </form> ";
                         }
                         else {
-                            cell7.innerHTML = resp[i + 6];
+                            if (resp[i + 5] === "1") {
+                                cell6.innerHTML = "Approved";
+                            }
+                            if (resp[i + 5] === "2") {
+                                cell6.innerHTML = "Denied";
+                            }
                         }
-                        cell8.innerHTML = resp[i + 7];
+                        if (resp[i + 7] === "0") {
+                            cell8.innerHTML = "Other";
+                        }
+                        if (resp[i + 7] === "1") {
+                            cell8.innerHTML = "Lodging";
+                        }
+                        if (resp[i + 7] === "2") {
+                            cell8.innerHTML = "Travel";
+                        }
+                        if (resp[i + 7] === "3") {
+                            cell8.innerHTML = "Food";
+                        }
+
                         i = i + 9;
                     }
                 }
