@@ -1,5 +1,31 @@
 
 
+function insertTableHeader() {// Find a <table> element with id="myTable":
+    var table = document.getElementById("table");
+    var header = table.createTHead();
+    var row = header.insertRow(0);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var cell5 = row.insertCell(4);
+    var cell6 = row.insertCell(5);
+    var cell7 = row.insertCell(6);
+    var cell8 = row.insertCell(7);
+    // Add some bold text in the new cell:
+    cell1.innerHTML = "Amount $";
+    cell2.innerHTML = "Time Submitted";
+    cell3.innerHTML = "Time Resolved";
+    cell4.innerHTML = "Description";
+    cell5.innerHTML = "Author";
+    cell6.innerHTML = "Resolver";
+    cell7.innerHTML = "Status";
+    cell8.innerHTML = "Type";
+
+
+
+}
+
 function approveDeny(row) {
 
     let url = 'http://localhost:8080/ERSProject1/AllPastTickets';
@@ -20,7 +46,10 @@ function approveDeny(row) {
         if (xhttp.readyState === 4) {
             // 200 says response was a success
             if (xhttp.status === 200) {
-
+                //deletes everything from the table
+                var Table = document.getElementById("table");
+                Table.innerHTML = "";
+                insertTableHeader();
                 allPastTickets();
 
 
@@ -84,11 +113,11 @@ function allPastTickets() {
                                 + "class='btn btn-primary' name = 'name' value = 'exrequest'>Approve/Deny</button> </form> ";
                         }
                         else {
-                            if (resp[i + 5] === "1") {
-                                cell6.innerHTML = "Approved";
+                            if (resp[i + 6] === "1") {
+                                cell7.innerHTML = "Approved";
                             }
-                            if (resp[i + 5] === "2") {
-                                cell6.innerHTML = "Denied";
+                            if (resp[i + 6] === "2") {
+                                cell7.innerHTML = "Denied";
                             }
                         }
                         if (resp[i + 7] === "0") {
