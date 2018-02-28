@@ -65,25 +65,30 @@ font-family: 'Alegreya Medium';font-size: 22px;
 /* nav bar */
 #nav {
    background-color: #754f44;
-    font-size: 30px;
+    font-size: 27px;
 }
 
 /* text within the nav bar */
 .nav-link {
     color: #fbffb9;
 }
+
+/* text within the nav bar */
+.nav-link:hover {
+    color: #fdd692;
+}
 /* 
 home button */
 #home {
   color: #ec7357;  
-  font-size: 75px;
+  font-size: 55px;
 }
 
 /* request form */
 #requestform {
-    width: 30%; /* of body width */
-    margin-top: 1%;
-    margin-left: 32%;
+    width: 40%; /* of body width */
+    margin-top: 0%;
+    margin-left: 27%;
     margin-bottom: 1%;
     border:20px outset#ec7357;
     border-radius: 20%;
@@ -107,8 +112,7 @@ home button */
 #desc {
     font-family: 'Alegreya Medium';
     font-size: 22px;
-    color: #754f44
-    ;
+    color: #754f44;
 }
 
 /* type of reinbursement label */
@@ -118,14 +122,7 @@ home button */
     margin-left: 3%;
 }
 
-#description {
-    margin-right: 3%;
-    height: 100px;
-}
 
-#amount {
-    margin-right: 3%;
-}
 
 #typereimb {
     margin-right: 3%;
