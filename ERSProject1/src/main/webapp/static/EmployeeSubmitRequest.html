@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="loginstyle.css">
 
 
     <!-- bootstrap css -->
@@ -16,8 +17,8 @@
 <body>
 
 
-    <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-        <h1>Revature Expense Reinbursement System</h1>
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded" id="nav">
+        <a id="home" href='http://localhost:8080/ERSProject1/EmployeeHome'> Oracle Reimbursements</a>
         <ul class="nav justify-content-center">
             <li class="nav-item">
                 <a class="nav-link active" href="http://localhost:8080/ERSProject1/EmployeeProfile">Profile</a>
@@ -36,39 +37,44 @@
 
         </ul>
     </nav>
-
-    <div class="input-group mb-3">
+    <br>
+    <br>
+    <div id="requestform">
         <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">$</span>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="am">Amount $</span>
+                </div>
+                <input type="text" class="form-control" id="amount" aria-label="Amount (to the nearest dollar)">
+
             </div>
-            <input type="text" class="form-control" id="amount" aria-label="Amount (to the nearest dollar)">
+
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="desc">Description</span>
+                </div>
+                <textarea class="form-control" id="description" aria-label="With textarea"></textarea>
+            </div>
 
         </div>
 
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">Reinbursement Description</span>
-            </div>
-            <textarea class="form-control" id="description" aria-label="With textarea"></textarea>
+        <br>
+        <label id="typelbl">Select Type of Reimbursement :</label>
+        <br>
+        <br>
+        <div id="typereimb" >
+            <select class="form-control">
+            <option value="one">Lodging</option>
+            <option value="two">Travel</option>
+            <option value="three">Food</option>
+            <option value="four">Other</option>
+            </select>
         </div>
-
     </div>
-
     <br>
-    <label>Type of Reinbursement :</label>
-    <br>
-    <br>
-    <select class="form-control" id="type">
-        <option value="one">Lodging</option>
-        <option value="two">Travel</option>
-        <option value="three">Food</option>
-        <option value="four">Other</option>
-
-    </select>
     <br>
 
-    <button type="submit" class="btn btn-primary" onclick="submitRequest()">Submit Request
+    <button type="submit" class="btn btn-primary" id="submitbtn" onclick="submitRequest()">Submit Request
     </button>
 
     <!-- bootstrap js requirements -->
