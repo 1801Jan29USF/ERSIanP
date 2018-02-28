@@ -117,7 +117,7 @@ public class UserDAOClass implements UserDAO {
 
 	@Override
 	public void submitRequest(int id, int amount, String desc, int type) {
-		LogSingleton.getLogger().trace("method called to obtain profile information");
+		LogSingleton.getLogger().trace("method called to obtain submit request");
 		LogSingleton.getLogger().trace("attempting to get connection to database");
 		try (Connection conn = connUtil.getConnection()) {
 
