@@ -180,7 +180,13 @@ public class UserDAOClass implements UserDAO {
 				String resolver = Integer.toString(rs.getInt("reimb_resolver"));
 				System.out.println(resolver);
 				if (!resolver.equals("0")) {
-					arr.add(resolver);
+					int resolver_id = rs.getInt("reimb_resolver");
+					PreparedStatement ps4 = conn
+							.prepareStatement("SELECT *FROM ers_users WHERE ers_users_id = " + resolver_id);
+					ResultSet rs4 = ps4.executeQuery();
+					if (rs4.next()) {
+						arr.add(rs4.getString("user_first_name") + " " + rs4.getString("user_last_name"));
+					}
 				} else {
 					arr.add("N/A");
 				}
@@ -236,11 +242,25 @@ public class UserDAOClass implements UserDAO {
 				}
 
 				arr.add(rs.getString("reimb_description"));
-				arr.add(rs.getString("reimb_author"));
+
+				int author_id = rs.getInt("reimb_author");
+				PreparedStatement ps2 = conn
+						.prepareStatement("SELECT *FROM ers_users WHERE ers_users_id = " + author_id);
+				ResultSet rs2 = ps2.executeQuery();
+				if (rs2.next()) {
+					arr.add(rs2.getString("user_first_name") + " " + rs2.getString("user_last_name"));
+				}
 
 				String resolver = Integer.toString(rs.getInt("reimb_resolver"));
 				if (!resolver.equals("0")) {
-					arr.add(resolver);
+
+					int resolver_id = rs.getInt("reimb_resolver");
+					PreparedStatement ps3 = conn
+							.prepareStatement("SELECT *FROM ers_users WHERE ers_users_id = " + resolver_id);
+					ResultSet rs3 = ps3.executeQuery();
+					if (rs3.next()) {
+						arr.add(rs3.getString("user_first_name") + " " + rs3.getString("user_last_name"));
+					}
 				} else {
 					arr.add("N/A");
 				}
@@ -253,7 +273,7 @@ public class UserDAOClass implements UserDAO {
 			return arr;
 
 		} catch (SQLException e) {
-			LogSingleton.getLogger().warn("failed to establish connection with database during login");
+			LogSingleton.getLogger().warn("failed to establish connection with database during all tickets retrieval");
 
 		}
 		// User with entered credentials doesn't exist

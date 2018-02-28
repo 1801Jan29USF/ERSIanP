@@ -6,7 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="stylesheet" type="text/css" href="loginstyle.css">
+    <link href='https://fonts.googleapis.com/css?family=Alegreya' rel='stylesheet'>
 
 
     <!-- bootstrap css -->
@@ -16,21 +17,25 @@
 
 <body>
 
-    <form method="POST" onsubmit="event.preventDefault(); verifyAndLogin()">
-        <div class="form-group">
-            <label for="exampleInputEmail1">Username</label>
-            <input class="form-control" id="enteredUsername" aria-describedby="emailHelp" placeholder="Enter email">
-            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="enteredPassword" placeholder="Password">
-        </div>
 
-        <button type="submit" class="btn btn-primary">Login</button>
+    <div id="wrapper">
+        <h1> Oracle Reimbursements </h1>
+        <br>
+        <form method="POST" onsubmit="event.preventDefault(); verifyAndLogin()" id="form">
+            <div class="form-group">
+                <label for="exampleInputEmail1" id="inputText">Username</label>
+                <input class="form-control" id="enteredUsername" aria-describedby="emailHelp" placeholder="Enter email">
 
-    
-    </form>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1" id="inputText">Password</label>
+                <input type="password" class="form-control" id="enteredPassword" placeholder="Password">
+            </div>
+            <br>
+
+            <button type="submit" class="btn btn-primary" id="submitbtn">Login</button>
+        </form>
+    </div>
 
     <!-- bootstrap js requirements -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

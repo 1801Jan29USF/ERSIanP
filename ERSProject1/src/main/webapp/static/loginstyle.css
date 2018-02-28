@@ -1,0 +1,62 @@
+
+
+/* keep client from being able to scroll on login page */
+html {
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%; /* full window width */
+    background-color: white !important;
+    
+    
+}
+
+h1 {
+    border-radius: 25px;
+    background:#e1ce7a;
+    padding: 5px; 
+    height: 150px;
+    text-align: center;
+    font-family: 'Alegreya Medium';
+    font-size: 30px;
+    
+}
+
+
+/* wrapper contains the login form and image */
+#wrapper {
+    width: 41%; /* of body width */
+    margin-top: 5%;
+    margin-left: 28%;
+    margin-bottom: 50%;
+    border:20px outset#ec7357;
+    border-radius: 20%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    padding-left: 3%;
+    padding-right: 3%;
+    box-shadow:  #754f44 10px 10px;
+ 
+
+}
+
+/* submit button contained in wrapper */
+#submitbtn {
+background-color: #754f44;
+border-color: #fbffb9;
+margin-left: 42%;
+font-family: 'Alegreya Medium';font-size: 22px ;
+}
+
+/* username and password input label texts */
+#inputText {
+color: #754f44;
+font-family: 'Alegreya Medium';font-size: 22px;
+
+}
+
+
+
