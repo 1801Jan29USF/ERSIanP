@@ -37,6 +37,7 @@ public class LoginController implements HttpController {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		LogSingleton.getLogger().trace("Request successfylly forwarded to Login.html");
 		req.getRequestDispatcher("/static/Login.html").forward(req, resp);
+		
 	}
 
 	@Override
@@ -63,13 +64,13 @@ public class LoginController implements HttpController {
 		List<Integer> idAndRole = ls.login(credentials.get(0), credentials.get(1));
 		String r;
 		if (idAndRole == null) {
-			System.out.println("blah balh");
 			r = mapper.writeValueAsString("");
 		}
 		else {
 			// write id to session
 			HttpSession session = req.getSession();
 			session.setAttribute("id", idAndRole.get(0));
+			session.setAttribute("role_id", idAndRole.get(1));
 			r = mapper.writeValueAsString(idAndRole.get(1));
 		}
 

@@ -46,62 +46,102 @@ public class DispatcherServlet extends DefaultServlet {
 			throws IOException, ServletException {
 		HttpSession session = request.getSession();
 		String url = request.getPathInfo();
+		boolean valid = false;
+
 		LogSingleton.getLogger().trace("Get request made with path " + url);
 		if (url.startsWith("/static/")) {
+			valid = true;
 			super.doGet(request, response);
 		} else {
+
 			if (url.startsWith("/Login")) {
-				session.invalidate();
+				System.out.println(session.getAttribute("id"));
+				if (session.getAttribute("id") != null) {
+					session.invalidate();
+				}
+				valid = true;
+				if (!url.equals("/Login")) {
+					response.sendRedirect("/ERSProject1/Login");
+					return;
+				}
 				lc.doGet(request, response);
+				return;
 			}
 
 			// check that a current session exists
 			if (session.getAttribute("id") != null) {
+				if (session.getAttribute("role_id").equals(0)) {
+					if (url.startsWith("/EmployeeProfile")) {
+						valid = true;
+						if (!url.equals("/EmployeeProfile")) {
+							response.sendRedirect("/ERSProject1/EmployeeProfile");
+							return;
+						}
 
-				if (url.startsWith("/EmployeeHome")) {
+						LogSingleton.getLogger().trace("Request successfylly forwarded to User's profile");
+						pc.doGet(request, response);
+					}
+					if (url.startsWith("/SubmitRequest")) {
+						valid = true;
+						if (!url.equals("/SubmitRequest")) {
+							response.sendRedirect("/ERSProject1/SubmitRequest");
+							return;
+						}
 
-					LogSingleton.getLogger().trace("Request successfylly forwarded to EmployeeHome.html");
-					ehc.doGet(request, response);
+						LogSingleton.getLogger().trace("Request successfylly forwarded to EmployeeSubmitRequest.html");
+						src.doGet(request, response);
+					}
 
+					if (url.startsWith("/PastTickets")) {
+						valid = true;
+						if (!url.equals("/PastTickets")) {
+							response.sendRedirect("/ERSProject1/PastTickets");
+							return;
+						}
+
+						LogSingleton.getLogger().trace("Request successfylly forwarded to PastTickets.html");
+						ptc.doGet(request, response);
+					}
 				}
-				if (url.startsWith("/ManagerHome")) {
+				if (session.getAttribute("role_id").equals(1)) {
+					if (url.startsWith("/ManagerProfile")) {
+						valid = true;
+						if (!url.equals("/ManagerProfile")) {
+							response.sendRedirect("/ERSProject1/ManagerProfile");
+							return;
+						}
 
-					LogSingleton.getLogger().trace("Request successfylly forwarded to ManagerHome.html");
-					mhc.doGet(request, response);
+						LogSingleton.getLogger().trace("Request successfylly forwarded to User's profile");
+						pc.doGet(request, response);
+					}
 
-				}
-				if (url.startsWith("/EmployeeProfile") || url.startsWith("/ManagerProfile")) {
+					if (url.startsWith("/AllPastTickets")) {
+						valid = true;
+						if (!url.equals("/AllPastTickets")) {
+							response.sendRedirect("/ERSProject1/AllPastTickets");
+							return;
+						}
 
-					LogSingleton.getLogger().trace("Request successfylly forwarded to User's profile");
-					pc.doGet(request, response);
-				}
-				if (url.startsWith("/SubmitRequest")) {
-
-					LogSingleton.getLogger().trace("Request successfylly forwarded to EmployeeSubmitRequest.html");
-					src.doGet(request, response);
-				}
-
-				if (url.startsWith("/PastTickets")) {
-
-					LogSingleton.getLogger().trace("Request successfylly forwarded to PastTickets.html");
-					ptc.doGet(request, response);
-				}
-
-				if (url.startsWith("/AllPastTickets")) {
-
-					LogSingleton.getLogger().trace("Request successfylly forwarded to AllPastTickets.html");
-					aptc.doGet(request, response);
+						LogSingleton.getLogger().trace("Request successfylly forwarded to AllPastTickets.html");
+						aptc.doGet(request, response);
+					}
 				}
 				if (url.startsWith("/Logout")) {
+					valid = true;
+					if (!url.equals("/Logout")) {
+						response.sendRedirect("/ERSProject1/Login");
+						return;
+					}
 
 					LogSingleton.getLogger().trace("Request successfylly forwarded to Login.html");
-					request.getRequestDispatcher("/static/Login.html").forward(request, response);
-					session.invalidate();
+					response.sendRedirect("/ERSProject1/Login");
 
 				}
 
 			}
-			else {
+
+			if (valid == false) {
+				session = null;
 				response.sendRedirect("/ERSProject1/Login");
 			}
 		}

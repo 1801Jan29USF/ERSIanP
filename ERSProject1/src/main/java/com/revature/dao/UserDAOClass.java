@@ -5,12 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 import com.revature.util.ConnectionUtil;
 import com.revature.util.LogSingleton;
@@ -162,14 +161,15 @@ public class UserDAOClass implements UserDAO {
 				// convert the timestamp to a date and the date to a string
 				Date date = new Date();
 				date.setTime(rs.getTimestamp("reimb_submitted").getTime());
-				String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+				String formattedDate = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG).format(date);
+				
 
 				arr.add(formattedDate);
 
 				if (rs.getTimestamp("reimb_resolved") != null) {
 					Date date2 = new Date();
 					date2.setTime(rs.getTimestamp("reimb_resolved").getTime());
-					formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(date2);
+					formattedDate = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG).format(date2);
 					arr.add(formattedDate);
 				} else {
 					arr.add("N/A");
@@ -228,14 +228,14 @@ public class UserDAOClass implements UserDAO {
 				// convert the timestamp to a date and the date to a string
 				Date date = new Date();
 				date.setTime(rs.getTimestamp("reimb_submitted").getTime());
-				String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(date);
+				String formattedDate = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG).format(date);
 
 				arr.add(formattedDate);
 
 				if (rs.getTimestamp("reimb_resolved") != null) {
 					Date date2 = new Date();
 					date2.setTime(rs.getTimestamp("reimb_resolved").getTime());
-					formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(date2);
+					formattedDate = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG).format(date2);
 					arr.add(formattedDate);
 				} else {
 					arr.add("N/A");
