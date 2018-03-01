@@ -14,14 +14,18 @@ function verifyAndLogin() {
             // 200 says response was a success
             if (xhttp.status === 200) {
                 resp = JSON.parse(xhttp.responseText);
-                if (resp !== null) {
+                console.log(resp);
+                if (resp !== "") {
                     if (resp === 0) {
 
-                        window.location = 'http://localhost:8080/ERSProject1/EmployeeHome';
+                        window.location = 'http://localhost:8080/ERSProject1/EmployeeProfile';
                     }
                     else {
-                        window.location = 'http://localhost:8080/ERSProject1/ManagerHome';
+                        window.location = 'http://localhost:8080/ERSProject1/ManagerProfile';
                     }
+                }
+                else {
+                    alert("User credentials could not be found please try again.");
                 }
 
             } else {

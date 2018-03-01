@@ -51,9 +51,8 @@ public class DispatcherServlet extends DefaultServlet {
 			super.doGet(request, response);
 		} else {
 			if (url.startsWith("/Login")) {
-
-				LogSingleton.getLogger().trace("Request successfylly forwarded to Login.html");
-				request.getRequestDispatcher("/static/Login.html").forward(request, response);
+				session.invalidate();
+				lc.doGet(request, response);
 			}
 
 			// check that a current session exists
@@ -101,6 +100,9 @@ public class DispatcherServlet extends DefaultServlet {
 
 				}
 
+			}
+			else {
+				response.sendRedirect("/ERSProject1/Login");
 			}
 		}
 	}

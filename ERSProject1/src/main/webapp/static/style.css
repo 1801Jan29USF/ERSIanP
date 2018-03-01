@@ -5,10 +5,17 @@
     overflow: hidden;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     margin: 0;
     padding: 0;
     width: 100%; /* full window width */
+    height: 100%;
+    
+   
 }
 
 h1 {
@@ -49,12 +56,28 @@ font-size: 22px ;
 border-radius: 25px;
 }
 
+#submitbtn:focus {
+    border-color: #ec7357;
+    box-shadow: inset 0 1px 1px #fbffb9, 0 0 8px #e1ce7a;
+}
+
 /* username and password input label texts */
 #inputText {
 color: #754f44;
 font-family: 'Alegreya Medium';font-size: 22px;
 
 }
+
+#enteredUsername:focus {
+    border-color: #ec7357;
+    box-shadow: inset 0 1px 1px #fbffb9, 0 0 8px #754f44;
+}
+
+#enteredPassword:focus {
+    border-color: #ec7357;
+    box-shadow: inset 0 1px 1px #fbffb9, 0 0 8px #754f44;
+}
+
 
 /* carousel styling */
 #carouselExampleIndicators {
@@ -98,8 +121,44 @@ home button */
     padding-right: 3%;
     box-shadow:  #754f44 10px 10px;
     
+} 
 
-}       
+#profile {
+    width: 35%; /* of body width */
+    margin-top: 5%;
+    margin-left: 27%;
+    margin-bottom: 1%;
+    border:20px outset#ec7357;
+    border-radius: 20%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    padding-left: 3%;
+    padding-right: 3%;
+    box-shadow:  #754f44 10px 10px;  
+}
+
+#approvedeny:focus {
+    border-color: #ec7357;
+    box-shadow: inset 0 1px 1px #fbffb9, 0 0 8px #754f44;
+}
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #754f44 !important;
+    color: #fbffb9 !important;
+}
+#managerapprove:focus {
+    border-color: #ec7357;
+    box-shadow: inset 0 1px 1px #fbffb9, 0 0 8px #754f44;
+}
+
+#amount:focus {
+    border-color: #ec7357;
+    box-shadow: inset 0 1px 1px #fbffb9, 0 0 8px #754f44;
+}
+
+#description:focus {
+    border-color: #ec7357;
+    box-shadow: inset 0 1px 1px #fbffb9, 0 0 8px #754f44;
+}
 
 /* reimbursement request input groups prepend text */
 #am {
@@ -119,14 +178,33 @@ home button */
 #typelbl {
     color: #754f44 !important;
     font-size: 25px;
-    margin-left: 3%;
+    margin-left: 15%;
 }
 
-
+#yo {
+    color: black;
+}
 
 #typereimb {
     margin-right: 3%;
 }
+#type:focus {
+border-color: #ec7357;
+    box-shadow: inset 0 1px 1px #fbffb9, 0 0 8px #754f44;
+}
 
+#mainrow {
+    color: #754f44;
+    background-color: white;
+    font-family: 'Alegreya Medium';
+    font-size: 28px;
 
+}
+
+#head {
+    color: #754f44;
+    background-color:white;
+    font-family: 'Alegreya Medium';
+    font-size: 22px;
+}
 

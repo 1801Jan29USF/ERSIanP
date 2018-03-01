@@ -35,7 +35,8 @@ public class LoginController implements HttpController {
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-		//
+		LogSingleton.getLogger().trace("Request successfylly forwarded to Login.html");
+		req.getRequestDispatcher("/static/Login.html").forward(req, resp);
 	}
 
 	@Override
@@ -60,15 +61,22 @@ public class LoginController implements HttpController {
 
 		// write the role_id to the response
 		List<Integer> idAndRole = ls.login(credentials.get(0), credentials.get(1));
-		String r = mapper.writeValueAsString(idAndRole.get(1));
+		String r;
+		if (idAndRole == null) {
+			System.out.println("blah balh");
+			r = mapper.writeValueAsString("");
+		}
+		else {
+			// write id to session
+			HttpSession session = req.getSession();
+			session.setAttribute("id", idAndRole.get(0));
+			r = mapper.writeValueAsString(idAndRole.get(1));
+		}
 
 		// actually write the json to the body of the request
 		resp.setContentType("application/json");
 		resp.getWriter().println(r);
 
-		// write id to session
-		HttpSession session = req.getSession();
-		session.setAttribute("id", idAndRole.get(0));
 	}
 
 }

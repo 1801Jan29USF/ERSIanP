@@ -110,7 +110,7 @@ function allPastTickets() {
                         if (resp[i + 6] === '0') {
                             cell7.innerHTML = "<form method='POST' onsubmit='event.preventDefault(); approveDeny(this)' id = " + i_d + "><select class='form-control' id='approvedeny'><option value='one'>"
                                 + "Approve</option><option value='two'>Deny</option></select> <br><button type='submit'"
-                                + "class='btn btn-primary' name = 'name' value = 'exrequest'>Approve/Deny</button> </form> ";
+                                + "class='btn btn-primary' id = 'managerapprove' name = 'name' value = 'exrequest'>Submit</button> </form> ";
                         }
                         else {
                             if (resp[i + 6] === "1") {

@@ -18,8 +18,8 @@ function loadProfile() {
             if (xhttp.status === 200) {
                 respArr = JSON.parse(xhttp.responseText);
                 console.log(respArr);
-                document.getElementById("username").innerText = 'ERS Username:     ' + respArr[0];
-                document.getElementById("password").innerText = 'ERS Password:     ' + respArr[1];
+                document.getElementById("username").innerText = 'Username:     ' + respArr[0];
+                document.getElementById("password").innerText = 'Password:     ' + respArr[1];
                 document.getElementById("firstname").innerText = 'First Name:     ' + respArr[2];
                 document.getElementById("lastname").innerText = 'Last Name:     ' + respArr[3];
                 document.getElementById("email").innerText = 'Email:     ' + respArr[4];

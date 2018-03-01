@@ -4,6 +4,10 @@ function submitRequest() {
     let amount = document.getElementById("amount").value;
     let description = document.getElementById("description").value;
     let type = document.getElementById("type").options[document.getElementById("type").selectedIndex].text
+    if (parseInt(amount) < 0 || amount === "" || isNaN(amount) || (amount[0] === "0" && !amount.includes("."))) {
+        alert("The Amount you have entered is not valid.");
+        return;
+    }
 
     let request = JSON.stringify([amount, description, type]);
     console.log(request);
@@ -17,8 +21,7 @@ function submitRequest() {
             // 200 says response was a success
             if (xhttp.status === 200) {
 
-                //notify the user that the request has been set
-                //TODO
+                alert("Your request as been received");
 
             } else {
                 console.log('Request for login failed')
