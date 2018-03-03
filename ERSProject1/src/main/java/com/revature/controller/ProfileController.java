@@ -2,15 +2,20 @@ package com.revature.controller;
 
 import java.io.IOException;
 
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.services.ProfileService;
-import com.revature.util.LogSingleton;
-
+/*
+ * Profile Controller used for receiving Profile Get and Post Requests 
+ * and writing profile database information to body of Post Response
+ */
 public class ProfileController implements HttpController {
 
 	/*******************************************************************************
@@ -18,6 +23,7 @@ public class ProfileController implements HttpController {
 	 ********************************************************************************/
 
 	private ProfileService ps = new ProfileService();
+	private Logger log = Logger.getRootLogger();
 
 	/*******************************************************************************
 	 * HTTP Request Interception Methods
@@ -36,19 +42,11 @@ public class ProfileController implements HttpController {
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 		HttpSession session = req.getSession();
-		LogSingleton.getLogger().trace("Profile req stream initialized");
-
-		// get user's username from session
-
+		log.trace("Profile req stream initialized");
 		ObjectMapper mapper = new ObjectMapper();
-		// write user's profile information to response
-
 		String r = mapper.writeValueAsString(ps.profile((int) session.getAttribute("id")));
-
-		// actually write the json to the body of the request
 		resp.setContentType("application/json");
 		resp.getWriter().println(r);
-		// write the user's id to the session
 	}
 
 }

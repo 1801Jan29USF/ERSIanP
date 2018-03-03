@@ -10,9 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.revature.services.AllPastTicketsService;
-import com.revature.util.LogSingleton;
 
 /*
  * /login searches Database for matching Login information. If the Login
@@ -28,6 +29,7 @@ public class AllPastTicketsController implements HttpController {
 	 ********************************************************************************/
 
 	private AllPastTicketsService apts = new AllPastTicketsService();
+	private Logger log = Logger.getRootLogger();
 
 	/*******************************************************************************
 	 * HTTP Request Interception Methods
@@ -40,14 +42,12 @@ public class AllPastTicketsController implements HttpController {
 
 	@Override
 	public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-
+		
 		BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream()));
 		ObjectMapper mapper = new ObjectMapper();
 		HttpSession session = req.getSession();
-
 		String json = "";
 		String line = br.readLine();
-		// read from stream into string
 		while (line != null) {
 			json += line;
 			line = br.readLine();
@@ -58,11 +58,9 @@ public class AllPastTicketsController implements HttpController {
 			apts.updateTickets(Integer.parseInt(info.get(1)), Integer.parseInt(info.get(0)),
 					(int) session.getAttribute("id"));
 		} else {
-			LogSingleton.getLogger().trace("All Past Tickets req stream initialized");
+			log.trace("All Past Tickets req stream initialized");
 			String r = mapper.writeValueAsString(apts.allPastTickets());
 			System.out.println(r);
-
-			// actually write the json to the body of the request
 			resp.setContentType("application/json");
 			resp.getWriter().println(r);
 		}

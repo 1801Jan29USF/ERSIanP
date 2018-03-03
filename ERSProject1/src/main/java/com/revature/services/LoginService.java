@@ -6,7 +6,7 @@ import com.revature.dao.UserDAOClass;
 
 /*
  * Service layer providing logic to operate on the data
- * sent to and from the DAO and the client.
+ * sent to and from the DAO and the client for the Login page.
  * 
  */
 
@@ -21,15 +21,10 @@ public class LoginService {
 	 * User Service Methods
 	 ********************************************************************************/
 
-	// for Singleton
-	public static UserDAOClass getUserDao() {
-		return dao;
-	}
-
 	// will return a user matching credentials from the database
 	// otherwise will return null
 	public List<Integer> login(String username, String password) {
-		return LoginService.getUserDao().login(username, password);
+		return dao.login(username, password);
 
 	}
 }

@@ -13,23 +13,18 @@ import com.revature.dao.UserDAOClass;
 public class ProfileService {
 
 	/*******************************************************************************
-	 * User Service Fields
+	 * Profile Service Fields
 	 ********************************************************************************/
 	private static UserDAOClass dao = new UserDAOClass();
 
 	/*******************************************************************************
-	 * User Service Methods
+	 * Profile Service Methods
 	 ********************************************************************************/
-
-	// for Singleton
-	public static UserDAOClass getUserDao() {
-		return dao;
-	}
 
 	// will return a user matching credentials from the database
 	// otherwise will return null
 	public List<String> profile(int id) {
-		return LoginService.getUserDao().profile(id);
+		return dao.profile(id);
 
 	}
 }

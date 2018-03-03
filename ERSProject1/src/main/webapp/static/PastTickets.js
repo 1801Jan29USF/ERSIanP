@@ -24,10 +24,10 @@ function pastTickets() {
                         var cell6 = row.insertCell(5);
                         var cell7 = row.insertCell(6);
                         // Add some text to the new cells:
-                        cell1.innerHTML = "$ " + resp[i];
+                        cell1.innerHTML = '$' + resp[i];
                         cell2.innerHTML = resp[i + 1];
                         cell3.innerHTML = resp[i + 2];
-                        cell4.innerHTML = resp[i + 3];
+                        cell4.innerText = resp[i + 3];
                         cell5.innerHTML = resp[i + 4];
                         if (resp[i + 5] === "0") {
                             cell6.innerHTML = "Pending";

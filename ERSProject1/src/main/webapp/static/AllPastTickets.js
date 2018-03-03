@@ -16,7 +16,7 @@ function insertTableHeader() {// Find a <table> element with id="myTable":
     cell1.innerHTML = "Amount $";
     cell2.innerHTML = "Time Submitted";
     cell3.innerHTML = "Time Resolved";
-    cell4.innerHTML = "Description";
+    cell4.innerText = "Description";
     cell5.innerHTML = "Author";
     cell6.innerHTML = "Resolver";
     cell7.innerHTML = "Status";
@@ -100,10 +100,10 @@ function allPastTickets() {
                         var cell7 = row.insertCell(6);
                         var cell8 = row.insertCell(7);
                         // Add some text to the new cells:
-                        cell1.innerHTML = resp[i];
+                        cell1.innerHTML = '$' + resp[i];
                         cell2.innerHTML = resp[i + 1];
                         cell3.innerHTML = resp[i + 2];
-                        cell4.innerHTML = resp[i + 3];
+                        cell4.innerText = resp[i + 3];
                         cell5.innerHTML = resp[i + 4];
                         cell6.innerHTML = resp[i + 5];
                         i_d = resp[i + 8];

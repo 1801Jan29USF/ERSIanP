@@ -4,7 +4,7 @@ function submitRequest() {
     let amount = document.getElementById("amount").value;
     let description = document.getElementById("description").value;
     let type = document.getElementById("type").options[document.getElementById("type").selectedIndex].text
-    if (parseInt(amount) < 0 || amount === "" || isNaN(amount) || (amount[0] === "0" && !amount.includes("."))) {
+    if (parseInt(amount) < 1 || amount === "" || isNaN(amount) || (amount[0] === "0" && !amount.includes("."))) {
         alert("The Amount you have entered is not valid.");
         return;
     }

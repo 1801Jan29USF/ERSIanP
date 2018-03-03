@@ -5,6 +5,7 @@
     overflow: hidden;
 }
 
+
 html {
     height: 100%;
 }
@@ -14,6 +15,7 @@ body {
     padding: 0;
     width: 100%; /* full window width */
     height: 100%;
+    font-family: "Baskerville";
     
    
 }
@@ -23,7 +25,6 @@ h1 {
     padding: 30px; 
     height: 115px;
     text-align: center;
-    font-family: 'Alegreya Medium';
     font-size: 30px;
     color: #754f44 !important;
     
@@ -105,6 +106,8 @@ home button */
 #home {
   color: #ec7357;  
   font-size: 55px;
+  font-family: 'Baskerville';
+  
 }
 
 /* request form */
@@ -205,6 +208,6 @@ border-color: #ec7357;
     color: #754f44;
     background-color:white;
     font-family: 'Alegreya Medium';
-    font-size: 10px;
+    font-size: 18px;
 }
 

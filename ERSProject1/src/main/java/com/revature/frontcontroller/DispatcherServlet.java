@@ -8,15 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.catalina.servlets.DefaultServlet;
+import org.apache.log4j.Logger;
 
 import com.revature.controller.AllPastTicketsController;
-import com.revature.controller.EmployeeHomeController;
+import com.revature.controller.LoginController;
 import com.revature.controller.PastTicketsController;
 import com.revature.controller.ProfileController;
-import com.revature.controller.EmployeeSubmitRequestController;
-import com.revature.controller.LoginController;
-import com.revature.controller.ManagerHomeController;
-import com.revature.util.LogSingleton;
+import com.revature.controller.RequestController;
 
 /*
  * Dispatcher Servlet class receives all requests and delegates the request to the specific controller
@@ -26,16 +24,15 @@ import com.revature.util.LogSingleton;
 public class DispatcherServlet extends DefaultServlet {
 
 	/*******************************************************************************
-	 * DispatcherServlet Fields
+	 * Dispatcher Servlet Controller Fields
 	 ********************************************************************************/
 
 	LoginController lc = new LoginController();
-	EmployeeHomeController ehc = new EmployeeHomeController();
 	ProfileController pc = new ProfileController();
-	EmployeeSubmitRequestController src = new EmployeeSubmitRequestController();
+	RequestController rc = new RequestController();
 	PastTicketsController ptc = new PastTicketsController();
-	ManagerHomeController mhc = new ManagerHomeController();
 	AllPastTicketsController aptc = new AllPastTicketsController();
+	private Logger log = Logger.getRootLogger();
 
 	/*******************************************************************************
 	 * DispatcherServlet Methods
@@ -44,18 +41,22 @@ public class DispatcherServlet extends DefaultServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
+		
 		HttpSession session = request.getSession();
 		String url = request.getPathInfo();
+		
 		boolean valid = false;
 
-		LogSingleton.getLogger().trace("Get request made with path " + url);
+		log.trace("Get request made with path " + url);
 		if (url.startsWith("/static/")) {
 			valid = true;
 			super.doGet(request, response);
 		} else {
 
 			if (url.startsWith("/Login")) {
-				System.out.println(session.getAttribute("id"));
+				
+				//if a user logs in and then presses back button to go
+				//back to log in screen, invalidate their session
 				if (session.getAttribute("id") != null) {
 					session.invalidate();
 				}
@@ -70,6 +71,7 @@ public class DispatcherServlet extends DefaultServlet {
 
 			// check that a current session exists
 			if (session.getAttribute("id") != null) {
+				//only allow employees to have access to these urls
 				if (session.getAttribute("role_id").equals(0)) {
 					if (url.startsWith("/EmployeeProfile")) {
 						valid = true;
@@ -78,7 +80,7 @@ public class DispatcherServlet extends DefaultServlet {
 							return;
 						}
 
-						LogSingleton.getLogger().trace("Request successfylly forwarded to User's profile");
+						log.trace("Request successfully forwarded to User's profile");
 						pc.doGet(request, response);
 					}
 					if (url.startsWith("/SubmitRequest")) {
@@ -88,8 +90,8 @@ public class DispatcherServlet extends DefaultServlet {
 							return;
 						}
 
-						LogSingleton.getLogger().trace("Request successfylly forwarded to EmployeeSubmitRequest.html");
-						src.doGet(request, response);
+						log.trace("Request successfully forwarded to EmployeeSubmitRequest.html");
+						rc.doGet(request, response);
 					}
 
 					if (url.startsWith("/PastTickets")) {
@@ -99,10 +101,11 @@ public class DispatcherServlet extends DefaultServlet {
 							return;
 						}
 
-						LogSingleton.getLogger().trace("Request successfylly forwarded to PastTickets.html");
+						log.trace("Request successfully forwarded to PastTickets.html");
 						ptc.doGet(request, response);
 					}
 				}
+				//only allow managers to have access to these urls
 				if (session.getAttribute("role_id").equals(1)) {
 					if (url.startsWith("/ManagerProfile")) {
 						valid = true;
@@ -111,7 +114,7 @@ public class DispatcherServlet extends DefaultServlet {
 							return;
 						}
 
-						LogSingleton.getLogger().trace("Request successfylly forwarded to User's profile");
+						log.trace("Request successfully forwarded to User's profile");
 						pc.doGet(request, response);
 					}
 
@@ -122,7 +125,7 @@ public class DispatcherServlet extends DefaultServlet {
 							return;
 						}
 
-						LogSingleton.getLogger().trace("Request successfylly forwarded to AllPastTickets.html");
+						log.trace("Request successfully forwarded to AllPastTickets.html");
 						aptc.doGet(request, response);
 					}
 				}
@@ -133,13 +136,13 @@ public class DispatcherServlet extends DefaultServlet {
 						return;
 					}
 
-					LogSingleton.getLogger().trace("Request successfylly forwarded to Login.html");
+					log.trace("Request successfully forwarded to Login.html");
 					response.sendRedirect("/ERSProject1/Login");
 
 				}
 
 			}
-
+			//if user goes to /ERSProject/()
 			if (valid == false) {
 				session = null;
 				response.sendRedirect("/ERSProject1/Login");
@@ -151,7 +154,7 @@ public class DispatcherServlet extends DefaultServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		String url = request.getPathInfo();
-		LogSingleton.getLogger().trace("Post request made with path " + url);
+		log.trace("Post request made with path " + url);
 		if (url.startsWith("/Login")) {
 			lc.doPost(request, response);
 		}
@@ -159,7 +162,7 @@ public class DispatcherServlet extends DefaultServlet {
 			pc.doPost(request, response);
 		}
 		if (url.startsWith("/SubmitRequest")) {
-			src.doPost(request, response);
+			rc.doPost(request, response);
 		}
 		if (url.startsWith("/PastTickets")) {
 			ptc.doPost(request, response);

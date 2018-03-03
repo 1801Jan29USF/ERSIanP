@@ -2,7 +2,7 @@ package com.revature.dao;
 
 import java.util.List;
 
-/*Interface for the AccountDAO containing methods that
+/* Interface for the AccountDAO containing methods that
  * communicate with database
  */
 public interface UserDAO {

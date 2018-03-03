@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.revature.dao.UserDAOClass;
 
+/*
+ * Controller used for receiving GET and POST requests for all of manager's 
+ * tickets
+ * 
+ */
 public class AllPastTicketsService {
 
 	/*******************************************************************************
@@ -15,20 +20,14 @@ public class AllPastTicketsService {
 	 * User Service Methods
 	 ********************************************************************************/
 
-	// for Singleton
-	public static UserDAOClass getUserDao() {
-		return dao;
-	}
-
 	// will return a user matching credentials from the database
 	// otherwise will return null
 	public List<String> allPastTickets() {
-		return LoginService.getUserDao().allPastTickets();
-
+		return dao.allPastTickets();
 	}
 
 	public void updateTickets(int status, int ticket_id, int id) {
-		AllPastTicketsService.getUserDao().updateTickets(status, ticket_id, id);
+		dao.updateTickets(status, ticket_id, id);
 
 	}
 }

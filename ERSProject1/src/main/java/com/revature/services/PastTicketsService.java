@@ -6,7 +6,7 @@ import com.revature.dao.UserDAOClass;
 
 /*
  * Service layer providing logic to operate on the data
- * sent to and from the DAO and the client.
+ * sent to and from the DAO and the client for Employee Past Ticket Page.
  * 
  */
 
@@ -21,15 +21,10 @@ public class PastTicketsService {
 	 * User Service Methods
 	 ********************************************************************************/
 
-	// for Singleton
-	public static UserDAOClass getUserDao() {
-		return dao;
-	}
-
 	// will return a user matching credentials from the database
 	// otherwise will return null
 	public List<String> pastTickets(int id) {
-		return LoginService.getUserDao().pastTickets(id);
+		return dao.pastTickets(id);
 
 	}
 }
